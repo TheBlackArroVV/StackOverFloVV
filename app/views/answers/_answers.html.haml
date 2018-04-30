@@ -10,6 +10,7 @@
     - answer.attachments.each do |attachment|
       %br/
       = link_to attachment.file.identifier, attachment.file.url
+      = link_to 'Delete attachment', attachment_path(attachment), method: :delete, remote: true
     %br/
     - if user_signed_in?
       - if current_user == answer.user

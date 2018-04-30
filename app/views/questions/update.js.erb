@@ -4,7 +4,7 @@
   <% end %>
 <% else %>
   $('.errors').html('');
-  $('.question_data').html('<%= j render 'question' %>');
+$('.question_data').html('<%= j render 'question' %>');
   $('a.edit_question_link').click(function(e){
     e.preventDefault();
     Turbolinks.clearCache();
