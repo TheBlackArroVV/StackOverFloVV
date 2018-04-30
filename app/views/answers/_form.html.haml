@@ -1,12 +1,12 @@
 %div.errors
 
-= form_for [@question, answer], url: question_answers_path(@question.id), remote: true do |f|
+= nested_form_for [@question, answer], url: question_answers_path(@question.id), remote: true do |f|
 
   = f.label :body
   = f.text_field :body
 
-  = f.fields_for :attachments do |a|
-    = a.label :file
-    = a.file_field :file
+  %p
+    Attachments:
+    = render 'attachments/form', f: f
 
   = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}"
