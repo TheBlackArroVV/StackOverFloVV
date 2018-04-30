@@ -1,0 +1,18 @@
+%p.notice= notice
+
+%h3 Answers
+- @question.answers.best.each do |answer|
+  - if answer.persisted?
+    = answer.body
+    - if answer.best_answer
+      %p "Best answer"
+    %br/
+    - if user_signed_in?
+      - if current_user == answer.user
+        = link_to 'Edit answer', '', class: 'edit_answer_link', data: { answer_id: answer.id, turbolinks: false }
+        = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
+        = render 'answers/edit', answer: answer
+      - if current_user == @question.user
+        = link_to 'Make this answer best', choose_best_answer_path(answer), class: 'choose_best_link', remote: true, method: :post
+    %br/
+= javascript_include_tag 'answers'

@@ -1,0 +1,16 @@
+<% if @answer.errors.any? %>
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.errors').html("<%= j message %>");
+  <% end %>
+<% else %>
+  $('.answers').html('<%= j render 'answers' %>');
+  $('a.edit_answer_link').click(function(e){
+    e.preventDefault();
+    Turbolinks.clearCache();
+    
+    var answer_id = $(this).data('answerId');
+
+    $(this).hide();
+    $('form#edit_answer_' + answer_id).show();
+  });
+<% end %>

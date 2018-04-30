@@ -1,0 +1,18 @@
+<% if @question.errors.any? %>
+  <% @question.errors.full_messages.each do |message| %>
+    $('.errors').html("<%= j message %>");
+  <% end %>
+<% else %>
+  $('.errors').html('');
+  $('.question_data').html('<%= j render 'question' %>');
+  $('a.edit_question_link').click(function(e){
+    e.preventDefault();
+    Turbolinks.clearCache();
+
+    var form = $('.edit_question_form');
+    var question = $('.question_data');
+
+    form.show();
+    question.hide();
+  })
+<% end %>

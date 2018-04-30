@@ -1,0 +1,8 @@
+%h1 Questions
+
+- @questions.each do |question|
+  = link_to question.title, question
+  %br
+
+- if user_signed_in?
+  = link_to 'New question', new_question_path
