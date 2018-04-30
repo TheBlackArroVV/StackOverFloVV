@@ -1,12 +1,15 @@
 %div.errors
 
-= nested_form_for answer, url: answer_path(answer.id), html: { id: "edit_answer_#{answer.id}" }, remote: true do |f|
+= form_for answer, url: answer_path(answer.id), html: { id: "edit_answer_#{answer.id}" }, remote: true do |f|
 
   = f.label :edit_answer_body
   = f.text_field :body
 
-  %p
-  Attachments:
-  = render 'attachments/form', f: f
+  %h3 Attachments
+  #tasks
+    = f.fields_for :attachments do |a|
+      = render 'attachments/attachment_fields', f: a
+    .links
+      = link_to_add_association 'add file', f, :attachments
 
   = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}", class: 'submit_edit_answer_form', data: { 'answer_id': "#{answer.id}" }

@@ -52,6 +52,7 @@ gem 'carrierwave'
 
 # multiply files to nested forms
 gem 'nested_form'
+gem 'cocoon'
 
 group :development, :test do
   gem 'pry'
