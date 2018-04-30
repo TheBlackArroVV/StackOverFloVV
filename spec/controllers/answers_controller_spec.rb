@@ -8,10 +8,10 @@ RSpec.describe AnswersController, type: :controller do
     context 'signed in user try to write a answer' do
 
       before do
-        post :create, params: { answer: attributes_for(:answer), question_id: question, user_id: @user }
+        post :create, params: { answer: attributes_for(:answer), question_id: question, user_id: @user, format: :js }
       end
       it 'should redirect_to answer' do
-        expect(response).to redirect_to question_path(question)
+        expect(response).to redirect_to question_answers_path(question)
       end
 
       it 'should find a question to be attached' do
@@ -19,14 +19,14 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context 'valid data' do
-        it 'should create a new answer' do
-          expect { Answer.create(body: attributes_for(:answer), question_id: question.id, user_id: @user.id) }.to change(Answer, :count).by(1)
+        it 'should create a new answer', js: true  do
+          expect { Answer.create(body: attributes_for(:answer), question_id: question.id, user_id: @user.id) }.to change(question.answers, :count).by(1)
         end
       end
 
       context 'invalid data' do
         it 'should not save a answer' do
-          expect { post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, user_id: @user } }.not_to change(Answer, :count)
+          expect { post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, user_id: @user, format: :js } }.not_to change(Answer, :count)
         end
       end
     end

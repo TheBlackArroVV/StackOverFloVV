@@ -8,8 +8,5 @@
 
 = render 'answers/form'
 
-%h3 Answers
-- @question.answers.each do |answer|
-  = answer.body
-  %br
-    = link_to 'Delete answer', question_answer_path(@question), method: :delete if answer.user == current_user
+%div.answers
+  = render 'answers/answers', answer: @question.answers

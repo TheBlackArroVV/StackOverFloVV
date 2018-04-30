@@ -1,6 +1,6 @@
 %strong New Answer
 
-= form_for @answer, url: question_answers_path(@question) do |f|
+= form_for @answer, url: question_answers_path(@question), remote: true do |f|
   - if @answer.errors.any?
     %h2
       = pluralize(@answer.errors.count, "error")

@@ -1,0 +1,7 @@
+%p.notice= notice
+
+%h3 Answers
+- @question.answers.each do |answer|
+  = answer.body
+  = link_to 'Delete answer', answer_path(answer), method: :delete if user_signed_in? && current_user == answer.user
+  %br

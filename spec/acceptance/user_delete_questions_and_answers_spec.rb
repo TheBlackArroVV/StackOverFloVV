@@ -13,7 +13,7 @@ feature 'User delete questions and answers' do
     expect(page).to have_content 'Your question was deleted'
   end
 
-  scenario 'User try to delete her answer' do
+  scenario 'User try to delete her answer', js: true do
     user_authentication(user)
     visit question_path(question)
     create_answer('AnswerBody')
@@ -28,7 +28,7 @@ feature 'User delete questions and answers' do
     expect(page).not_to have_content 'Delete question'
   end
 
-  scenario 'User try to delete alien question' do
+  scenario 'User try to delete alien answer', js: true do
     user_authentication(new_user)
 
     visit question_path(question)
