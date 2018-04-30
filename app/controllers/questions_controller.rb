@@ -25,6 +25,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answers = @question.answers
+    @answer.attachments.build
   end
 
   def update

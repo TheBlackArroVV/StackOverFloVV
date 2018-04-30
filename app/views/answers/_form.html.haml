@@ -5,4 +5,8 @@
   = f.label :body
   = f.text_field :body
 
+  = f.fields_for :attachments do |a|
+    = a.label :file
+    = a.file_field :file
+
   = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}"

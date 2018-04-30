@@ -3,9 +3,13 @@
 %h3 Answers
 - @question.answers.best.each do |answer|
   - if answer.persisted?
-    = answer.body
     - if answer.best_answer
-      %p "Best answer"
+      "Best answer"
+      %br/
+    = answer.body
+    - answer.attachments.each do |attachment|
+      %br/
+      = link_to attachment.file.identifier, attachment.file.url
     %br/
     - if user_signed_in?
       - if current_user == answer.user
@@ -15,4 +19,5 @@
       - if current_user == @question.user
         = link_to 'Make this answer best', choose_best_answer_path(answer), class: 'choose_best_link', remote: true, method: :post
     %br/
+
 = javascript_include_tag 'answers'

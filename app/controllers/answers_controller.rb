@@ -8,6 +8,7 @@ class AnswersController < ApplicationController
     flash[:notice] = 'You need to sign in or sign up before continuing.' if !current_user
     @answer.user = current_user
     @answer.save
+    @answer.attachments.build
   end
 
   def update
@@ -29,7 +30,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:question_id, :body, :user_id)
+    params.require(:answer).permit(:question_id, :body, :user_id, attachments_attributes: [:file])
   end
 
   def set_answer
