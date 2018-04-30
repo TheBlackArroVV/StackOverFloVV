@@ -2,3 +2,9 @@
 %br
 = @question.body
 %br
+  %p
+    Attachments:
+    %ul
+      - @question.attachments.each do |a|
+        %li
+          = a.file.file.filename

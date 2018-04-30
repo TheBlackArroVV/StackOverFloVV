@@ -45,6 +45,9 @@ gem 'devise'
 # for ajax and jquery
 gem 'jquery-rails'
 
+# file attachment
+gem 'carrierwave'
+
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

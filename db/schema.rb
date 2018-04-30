@@ -1,4 +1,4 @@
-ActiveRecord::Schema.define(version: 2018_04_29_134349) do
+ActiveRecord::Schema.define(version: 2018_04_29_193658) do
 
   create_table "answers", force: :cascade do |t|
     t.text "body"
@@ -9,6 +9,14 @@ ActiveRecord::Schema.define(version: 2018_04_29_134349) do
     t.boolean "best_answer", default: false
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "question_id"
+    t.index ["question_id"], name: "index_attachments_on_question_id"
   end
 
   create_table "questions", force: :cascade do |t|
