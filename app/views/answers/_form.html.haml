@@ -5,8 +5,14 @@
   = f.label :body
   = f.text_field :body
 
-  %p
-    Attachments:
-    = render 'attachments/form', f: f
+  = f.fields_for :attachments do |a|
+    = a.label :file
+    = a.file_field :file
+
+  = f.link_to_add 'Add a attachment', :attachments
+
+  -#%p
+  -#  Attachments:
+  -#  = render 'attachments/form', f: f
 
   = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}"

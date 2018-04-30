@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'acceptance/acceptance_helper'
 
 feature 'User delete questions and answers' do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'acceptance_helper'
 
 feature 'Delete files from question' do
@@ -9,12 +11,12 @@ feature 'Delete files from question' do
     visit question_path(question)
   end
 
-  scenario 'delete file from question' do
-    fill_in 'Title', with: 'Title'
-    fill_in 'Body', with: 'Body'
-    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-    click_on 'Create'
+  scenario 'delete file from question', js: true do
+    fill_in 'answer_body', with: 'Body'
+    attach_file 'File', "#{Rails.root}/spec/files/test_file1.txt"
+    click_on 'Create answer'
+    click_on 'Delete attachment'
 
-    expect(page).to have_link'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+    expect(page).to_not have_link 'test_file1.txt', href: '/uploads/attachment/file/1/test_file1.txt'
   end
 end

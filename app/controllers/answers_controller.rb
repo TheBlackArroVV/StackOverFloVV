@@ -1,11 +1,11 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:create]
   before_action :set_question, only: :create
-  before_action :set_answer, only: [:destroy, :update, :choose_best]
+  before_action :set_answer, only: %i[destroy update choose_best]
 
   def create
     @answer = @question.answers.new(answer_params)
-    flash[:notice] = 'You need to sign in or sign up before continuing.' if !current_user
+    flash[:notice] = 'You need to sign in or sign up before continuing.' unless current_user
     @answer.user = current_user
     @answer.save
     @answer.attachments.build

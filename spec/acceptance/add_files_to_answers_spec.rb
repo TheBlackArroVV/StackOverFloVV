@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'acceptance_helper'
 
 feature 'Add files to answers' do
@@ -15,7 +17,7 @@ feature 'Add files to answers' do
     click_on 'Create answer'
 
     within '.answers' do
-      expect(page).to have_link'test_file1.txt', href: '/uploads/attachment/file/1/test_file1.txt'
+      expect(page).to have_link 'test_file1.txt', href: '/uploads/attachment/file/1/test_file1.txt'
     end
   end
 end

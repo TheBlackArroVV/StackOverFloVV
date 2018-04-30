@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
@@ -19,7 +21,6 @@ RSpec.describe AnswersController, type: :controller do
     let(:answer) { create :answer, user: @user, question: question }
 
     context 'signed in user try to write a answer' do
-
       before do
         post :create, params: { answer: attributes_for(:answer), question_id: question, user_id: @user, format: :js }
       end
@@ -32,7 +33,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context 'valid data' do
-        it 'should create a new answer', js: true  do
+        it 'should create a new answer', js: true do
           expect { Answer.create(body: attributes_for(:answer), question_id: question.id, user_id: @user.id) }.to change(question.answers, :count).by(1)
         end
       end
@@ -45,7 +46,6 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'not loged user try to write a answer' do
-
       it 'should redirect_to login' do
         sign_out @user
 

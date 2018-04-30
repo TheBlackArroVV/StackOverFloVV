@@ -4,10 +4,10 @@ class Attachment < ApplicationRecord
   mount_uploader :file, FileUploader
 
   def set_question
-    if attachable_type == "Question"
-      return Question.find(attachable_id)
+    if attachable_type == 'Question'
+      Question.find(attachable_id)
     else
-      return Answer.find(attachable_id).question
+      Answer.find(attachable_id).question
     end
   end
 end

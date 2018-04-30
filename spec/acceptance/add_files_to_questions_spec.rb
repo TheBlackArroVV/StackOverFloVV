@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'acceptance_helper.rb'
 
 feature 'Add Files to questions' do
@@ -13,8 +15,7 @@ feature 'Add Files to questions' do
     fill_in 'Body', with: 'Body'
     attach_file 'File', "#{Rails.root}/spec/files/test_file1.txt"
     click_on 'Create'
-    click_on 'Delete file'
 
-    expect(page).to_not have_link'test_file1.txt', href: '/uploads/attachment/file/1/test_file.txt'
+    expect(page).to_not have_link 'test_file1.txt', href: '/uploads/attachment/file/1/test_file.txt'
   end
 end

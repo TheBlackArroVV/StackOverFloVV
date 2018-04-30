@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AuthenticationMacros
   def user_authentication(user)
     visit new_user_session_path

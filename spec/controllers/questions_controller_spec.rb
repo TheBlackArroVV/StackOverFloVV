@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
@@ -34,7 +36,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'should create a new answer' do
-      expect{ FactoryBot.create(:answer) }.to change(Answer, :count).by(1)
+      expect { FactoryBot.create(:answer) }.to change(Answer, :count).by(1)
     end
   end
 
@@ -90,7 +92,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'valid data' do
-
       it 'should update question in  db' do
         patch :update, params: { id: question, question: attributes_for(:new_question), format: :js }
         question.reload
@@ -110,16 +111,14 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-
   describe 'DELETE #destroy' do
-
-      it 'should delete question from db' do
-        question
-        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
-      end
-      it 'should redirect to questions' do
-        delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
-      end
+    it 'should delete question from db' do
+      question
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
     end
+    it 'should redirect to questions' do
+      delete :destroy, params: { id: question }
+      expect(response).to redirect_to questions_path
+    end
+  end
 end
