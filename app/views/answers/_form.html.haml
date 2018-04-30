@@ -1,0 +1,17 @@
+%strong New Answer
+
+= form_for @answer, url: question_answers_path(@question) do |f|
+  - if @answer.errors.any?
+    %h2
+      = pluralize(@answer.errors.count, "error")
+      prohibited this train from being saved:
+    %ul
+      - @answer.errors.full_messages.each do |message|
+        %li= message
+
+
+
+  = f.label :body
+  = f.text_field :body
+
+  = f.submit 'Create answer'

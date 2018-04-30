@@ -1,0 +1,15 @@
+%h1 Question
+%h2= @question.title
+%br
+= @question.body
+%br
+
+= link_to 'Delete question', question_path, method: :delete if @question.user == current_user
+
+= render 'answers/form'
+
+%h3 Answers
+- @question.answers.each do |answer|
+  = answer.body
+  %br
+    = link_to 'Delete answer', question_answer_path(@question), method: :delete if answer.user == current_user

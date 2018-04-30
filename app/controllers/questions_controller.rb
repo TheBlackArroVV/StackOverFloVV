@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :edit, :update, :create, :destroy]
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -11,6 +12,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
+    @question.user = current_user
 
     if @question.save
       redirect_to @question
@@ -20,7 +22,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answers = @question.answers.build
+    @answer = @question.answers.build
   end
 
   def edit
@@ -36,6 +38,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
+    flash[:notice] = 'Your question was deleted'
     redirect_to questions_path
   end
 
@@ -46,6 +49,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, :user_id)
   end
 end
