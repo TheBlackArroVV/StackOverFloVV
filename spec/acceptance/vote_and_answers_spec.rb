@@ -4,93 +4,95 @@ feature 'vote for answer' do
   given(:user) { create :user }
   given(:new_user) { create :user }
   given(:question) { create :question, user: user }
-  given(:answer) { create :answer, user: user, question: question }
+  given!(:answer) { create :answer, user: user, question: question }
 
-  scenario 'all users can see number of votes for answer' do
+  scenario 'all users can see number of votes for answer', js: true do
     visit question_path(question)
 
-    expect(page).to have_content 'Answer votes'
+    within '.answer_votes' do
+      expect(page).to have_content '0'
+    end
   end
 
-  scenario 'unloged user try to vote for question' do
+  scenario 'unloged user try to vote for question', js: true do
     visit question_path(question)
 
     expect(page).to_not have_content 'vote for answer'
   end
 
-  scenario 'loged user try to vote for answer' do
+  scenario 'loged user try to vote for answer', js: true do
     user_authentication(new_user)
     visit question_path(question)
     click_on 'vote for answer'
 
-    within '.answers' do
+    within '.answer_votes' do
       expect(page).to have_content 'vote for answer'
       expect(page).to have_content '1'
     end
   end
 
-  scenario 'author try to vote for answer' do
+  scenario 'author try to vote for answer', js: true do
     user_authentication(user)
     visit question_path(question)
 
-    within '.answers' do
+    within '.answer_votes' do
       expect(page).to_not have_content 'vote for answer'
       expect(page).to have_content '0'
     end
   end
 
-  scenario 'unloged user try to vote against answer' do
+  scenario 'unloged user try to vote against answer', js: true do
     visit question_path(question)
 
     expect(page).to_not have_content 'vote against answer'
   end
 
-  scenario 'loged user try to vote against answer' do
+  scenario 'loged user try to vote against answer', js: true do
     user_authentication(new_user)
     visit question_path(question)
     click_on 'vote against answer'
 
-    within '.answers' do
+    within '.answer_votes' do
       expect(page).to have_content 'vote against answer'
       expect(page).to have_content '-1'
     end
   end
 
-  scenario 'author try to vote against answer' do
+  scenario 'author try to vote against answer', js: true do
     user_authentication(user)
     visit question_path(question)
 
-    within '.answers' do
+    within '.answer_votes' do
       expect(page).to_not have_content 'vote against answer'
       expect(page).to have_content '0'
     end
   end
 
-  scenario 'user try to delete her vote and vote against again' do
+  scenario 'user try to delete her vote and vote against again', js: true do
     user_authentication(new_user)
     visit question_path(question)
     click_on 'vote for answer'
     click_on 'delete my vote'
     click_on 'vote against answer'
 
-    within '.answers' do
+    within '.answer_votes' do
       expect(page).to have_content '-1'
     end
   end
 
-  scenario 'user try to delete her vote and vote for again' do
+  scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
     click_on 'vote for answer'
     click_on 'delete my vote'
     click_on 'vote for answer'
 
-    within '.answers' do
+    within '.answer_votes' do
       expect(page).to have_content '1'
     end
   end
 
-  scenario 'user try to delete her vote and vote for again' do
+  scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
     click_on 'vote against answer'
@@ -98,16 +100,20 @@ feature 'vote for answer' do
     click_on 'vote against answer'
 
 
-    expect(page).to have_content '-1'
+    within '.answer_votes' do
+      expect(page).to have_content '-1'
+    end
   end
 
-  scenario 'user try to delete her vote and vote for again' do
+  scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
     click_on 'vote for answer'
     click_on 'delete my vote'
     click_on 'vote for answer'
 
-    expect(page).to have_content '1'
+    within '.answer_votes' do
+      expect(page).to have_content '1'
+    end
   end
 end

@@ -1,8 +1,8 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  it_behaves_like 'voted'
+
   login_user
   let(:question) { create :question, user: @user }
   let(:answer) { create :answer, user: @user, question: question }
