@@ -8,10 +8,6 @@ Rails.application.routes.draw do
   resources :attachments, shallow: true
 
   resources :questions do
-    resources :answers, shallow: true do
-      member do
-        post :choose_best
-      end
-    end
+    resources :answers, shallow: true
   end
 end
