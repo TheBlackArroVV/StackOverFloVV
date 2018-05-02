@@ -4,10 +4,6 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions do
-    resources :answers, shallow: true do
-      member do
-        post :choose_best
-      end
-    end
+    resources :answers, shallow: true
   end
 end
