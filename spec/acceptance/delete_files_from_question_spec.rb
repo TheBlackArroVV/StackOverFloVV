@@ -13,6 +13,7 @@ feature 'Delete files from question' do
 
   scenario 'delete file from question', js: true do
     fill_in 'answer_body', with: 'Body'
+    click_on 'add file'
     attach_file 'File', "#{Rails.root}/spec/files/test_file1.txt"
     click_on 'Create answer'
     click_on 'Delete attachment'

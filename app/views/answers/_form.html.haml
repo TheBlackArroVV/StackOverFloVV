@@ -9,5 +9,5 @@
     = f.fields_for :attachments do |a|
       = render 'attachments/attachment_fields', f: a
     .links
-      = link_to_add_association 'add file', f, :attachments
-  = f.submit
+      = link_to_add_association 'add file', f, :attachments, name: 'add file'
+  = f.submit 'Create answer'
