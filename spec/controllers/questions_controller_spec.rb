@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create :question }
-  let(:answer) { create :answer }
+  login_user
+  let(:question) { create :question, user: @user }
+  let(:answer) { create :answer, user: @user, question: question }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
@@ -34,7 +35,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { get :new }
+    before do
+      get :new
+    end
 
     it 'should create a new question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -59,13 +62,16 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     context 'valid data' do
+      before do
+        post :create, params: { question: attributes_for(:question) }
+      end
+
       it 'should create a new Question' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
       it 'should redirect to @question' do
-        post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to redirect_to question_path(Question.last)
       end
     end
 
@@ -115,8 +121,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to render_template :edit
       end
     end
+  end
 
-    describe 'DELETE #destroy' do
+
+  describe 'DELETE #destroy' do
 
       it 'should delete question from db' do
         question
@@ -127,5 +135,4 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to redirect_to questions_path
       end
     end
-  end
 end

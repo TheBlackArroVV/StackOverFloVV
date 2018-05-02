@@ -37,9 +37,13 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # slim views
-gem 'slim-rails'
+gem 'haml'
+
+# authentitacation
+gem 'devise'
 
 group :development, :test do
+  gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # BDD and RSpec
@@ -65,6 +69,8 @@ group :test do
   gem 'chromedriver-helper'
   # macros for rspec
   gem 'shoulda-matchers'
+  gem 'launchy'
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,16 +1,19 @@
 FactoryBot.define do
   factory :answer do
-    body "MyText"
-    question_id 1
+    body "MyAnswer"
+    question
+    user
   end
 
   factory :new_answer do
     body "MyText"
-    question_id 1
+    question
+    user
   end
 
   factory :invalid_answer, class: 'Answer' do
     body nil
-    question_id nil
+    question nil
+    user nil
   end
 end
