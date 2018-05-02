@@ -42,6 +42,9 @@ gem 'haml'
 # authentitacation
 gem 'devise'
 
+# for ajax and jquery
+gem 'jquery-rails'
+
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -50,6 +53,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rails-controller-testing'
   gem 'factory_bot_rails'
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -65,12 +69,12 @@ group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15', '< 4.0'
   gem 'selenium-webdriver'
+  gem 'geckodriver-helper'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   # macros for rspec
   gem 'shoulda-matchers'
   gem 'launchy'
-  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
