@@ -25,7 +25,9 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answers = @question.answers
-    @answer.attachments.build
+    if params[:answer] 
+      @answer.attachments.build if params[:answer][:attachments_attributes]
+    end
   end
 
   def update
