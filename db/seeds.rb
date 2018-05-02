@@ -1,8 +1,36 @@
-# frozen_string_literal: true
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
+def email
+  Faker::Internet.email
+end
+
+def password
+  Faker::Internet.password(6)
+end
+
+def title
+  Faker::Lorem.word
+end
+
+def body
+  Faker::Lorem.sentence
+end
+
+def user
+  User.create(email: email, password: password)
+end
+
+def question
+  Question.create(title: title, body: body, user: user)
+end
+
+def answer
+  Answer.create(body: body, question: question, user: user, best_answer: best_answer)
+end
+
+def best_answer
+  Faker::Boolean.boolean
+end
+
+15.times { Attachment.create(file: File.open(File.join(Rails.root, '/public/favicon.ico')), attachable: question) }
+15.times { Attachment.create(file: File.open(File.join(Rails.root, '/public/favicon.ico')), attachable: answer) }

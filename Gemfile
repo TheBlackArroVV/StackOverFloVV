@@ -54,6 +54,9 @@ gem 'carrierwave'
 gem 'nested_form'
 gem 'cocoon'
 
+# for seeds
+gem 'faker'
+
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
