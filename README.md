@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version 2.5.1p57
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
+* Rails version 5.2.0
 
 * Database initialization
+You need to create your own config/database.yml or copy sample(config/database.yml.sample) default db for development is sqlite3
 
 * How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+Just type "rspec" in folder with project
 
 * Deployment instructions
-
-* ...
+Not yet ready
