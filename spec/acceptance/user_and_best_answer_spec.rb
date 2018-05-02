@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'acceptance_helper.rb'
 
 feature 'User and best answer' do

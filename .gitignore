@@ -30,4 +30,5 @@
 /config/master.key
 /config/database.yml
 
-.idea
+/.idea
+/public/uploads

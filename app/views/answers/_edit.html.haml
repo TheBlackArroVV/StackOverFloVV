@@ -5,4 +5,11 @@
   = f.label :edit_answer_body
   = f.text_field :body
 
+  %h3 Attachments
+  #tasks
+    = f.fields_for :attachments do |a|
+      = render 'attachments/attachment_fields', f: a
+    .links
+      = link_to_add_association 'add file', f, :attachments
+
   = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}", class: 'submit_edit_answer_form', data: { 'answer_id': "#{answer.id}" }

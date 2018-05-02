@@ -1,8 +1,13 @@
 %div.errors
-
 = form_for [@question, answer], url: question_answers_path(@question.id), remote: true do |f|
-
-  = f.label :body
-  = f.text_field :body
-
-  = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}"
+  .field
+    = f.label :body
+    %br
+    = f.text_field :body
+  %h3 Attachments
+  #tasks
+    = f.fields_for :attachments do |a|
+      = render 'attachments/attachment_fields', f: a
+    .links
+      = link_to_add_association 'add file', f, :attachments
+  = f.submit

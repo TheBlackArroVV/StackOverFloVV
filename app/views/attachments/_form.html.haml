@@ -1,0 +1,6 @@
+= f.fields_for :attachments do |a|
+  %p
+    = a.label :file
+    = a.file_field :file
+
+= f.link_to_add 'Add a attachment', :attachments

@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :answer do
-    body "MyAnswer"
+    body 'MyAnswer'
     best_answer false
     question
     user
   end
 
   factory :new_answer do
-    body "new"
+    body 'new'
     best_answer false
     question
     user

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
@@ -25,12 +27,16 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
+    it 'should assigns a new attachment for answer' do
+      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
+    end
+
     it 'should render show' do
       expect(response).to render_template :show
     end
 
     it 'should create a new answer' do
-      expect{ FactoryBot.create(:answer) }.to change(Answer, :count).by(1)
+      expect { FactoryBot.create(:answer) }.to change(Answer, :count).by(1)
     end
   end
 
@@ -41,6 +47,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'should create a new question' do
       expect(assigns(:question)).to be_a_new(Question)
+    end
+
+    it 'should assigns a new attachment' do
+      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
     end
 
     it 'should render new' do
@@ -82,7 +92,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'valid data' do
-
       it 'should update question in  db' do
         patch :update, params: { id: question, question: attributes_for(:new_question), format: :js }
         question.reload
@@ -102,16 +111,14 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-
   describe 'DELETE #destroy' do
-
-      it 'should delete question from db' do
-        question
-        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
-      end
-      it 'should redirect to questions' do
-        delete :destroy, params: { id: question }
-        expect(response).to redirect_to questions_path
-      end
+    it 'should delete question from db' do
+      question
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
     end
+    it 'should redirect to questions' do
+      delete :destroy, params: { id: question }
+      expect(response).to redirect_to questions_path
+    end
+  end
 end
