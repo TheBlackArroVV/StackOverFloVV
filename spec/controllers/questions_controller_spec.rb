@@ -48,18 +48,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'GET #edit' do
-    before { get :edit, params: { id: question } }
-
-    it 'should assign a question to @question' do
-      expect(assigns(:question)).to eq question
-    end
-
-    it 'should render edit' do
-      expect(response).to render_template :edit
-    end
-  end
-
   describe 'POST #create' do
     context 'valid data' do
       before do
@@ -89,36 +77,27 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     it 'should assign requested question to @question' do
-      patch :update, params: { id: question, question: attributes_for(:question) }
+      patch :update, params: { id: question, question: attributes_for(:question), format: :js }
       expect(assigns(:question)).to eq question
     end
 
     context 'valid data' do
 
       it 'should update question in  db' do
-        patch :update, params: { id: question, question: attributes_for(:new_question) }
+        patch :update, params: { id: question, question: attributes_for(:new_question), format: :js }
         question.reload
         expect(question.title).to eq 'new'
         expect(question.body).to eq 'new'
       end
-
-      it 'should redirect_to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
-        expect(response).to redirect_to question_path(assigns(:question))
-      end
     end
 
     context 'invalid data' do
-      before { patch :update, params: { id: question, question: attributes_for(:invalid_question) } }
+      before { patch :update, params: { id: question, question: attributes_for(:invalid_question), format: :js } }
 
       it 'should don`t save data to db' do
         question.reload
         expect(question.title).to eq 'MyString'
         expect(question.body).to eq 'MyText'
-      end
-
-      it 'should re-render edit' do
-        expect(response).to render_template :edit
       end
     end
   end

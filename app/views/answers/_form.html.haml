@@ -1,17 +1,8 @@
-%strong New Answer
+%div.errors
 
-= form_for @answer, url: question_answers_path(@question), remote: true do |f|
-  - if @answer.errors.any?
-    %h2
-      = pluralize(@answer.errors.count, "error")
-      prohibited this train from being saved:
-    %ul
-      - @answer.errors.full_messages.each do |message|
-        %li= message
-
-
+= form_for [@question, answer], url: question_answers_path(@question.id), remote: true do |f|
 
   = f.label :body
   = f.text_field :body
 
-  = f.submit 'Create answer'
+  = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}"

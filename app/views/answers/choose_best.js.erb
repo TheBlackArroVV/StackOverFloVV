@@ -1,10 +1,7 @@
-Turbolinks.clearCache()
 <% if @answer.errors.any? %>
   <% @answer.errors.full_messages.each do |message| %>
     $('.errors').html("<%= j message %>");
   <% end %>
 <% else %>
-  $('.errors').html('');
   $('.answers').html('<%= j render 'answers' %>');
-  $('#answer_body').val('');
 <% end %>

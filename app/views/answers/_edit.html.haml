@@ -1,0 +1,8 @@
+%div.errors
+
+= form_for answer, url: answer_path(answer.id), html: { id: "edit_answer_#{answer.id}" }, remote: true do |f|
+
+  = f.label :edit_answer_body
+  = f.text_field :body
+
+  = f.submit "#{answer.new_record? ? 'Create answer' : 'Update answer'}", class: 'submit_edit_answer_form', data: { 'answer_id': "#{answer.id}" }

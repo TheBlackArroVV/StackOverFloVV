@@ -1,12 +1,17 @@
-%h1 Question
-%h2= @question.title
-%br
-= @question.body
+%div.question
+  %div.edit_question_form
+    = render 'form'
+
+  %div.question_data
+    = render @question
+  %div.question_links
+    - if @question.user == current_user
+      = link_to 'Edit question', '', class: 'edit_question_link'
+      = link_to 'Delete question', question_path, method: :delete, remote: true
+
 %br
 
-= link_to 'Delete question', question_path, method: :delete if @question.user == current_user
-
-= render 'answers/form'
+= render 'answers/form', answer: @answer
 
 %div.answers
   = render 'answers/answers', answer: @question.answers

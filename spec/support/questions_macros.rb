@@ -9,7 +9,7 @@ module QuestionMacros
   end
 
   def create_answer(answer)
-    fill_in 'Body', with: answer
+    fill_in 'answer_body', with: answer
 
     click_on 'Create answer'
   end

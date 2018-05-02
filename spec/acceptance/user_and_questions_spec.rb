@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'acceptance/acceptance_helper'
 
 feature 'User and questions' do
   given(:user) { create :user }
@@ -21,6 +21,14 @@ feature 'User and questions' do
       within '.answers' do
         expect(page).to have_content 'AnswerBody'
       end
+    end
+
+    scenario 'user try to create blank answer', js: true do
+      user_authentication(user)
+      create_question
+      click_on 'Create answer'
+
+      expect(page).to have_content "Body can't be blank"
     end
   end
 
