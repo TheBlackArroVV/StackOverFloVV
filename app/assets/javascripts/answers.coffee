@@ -1,4 +1,6 @@
 $(window.document).ready ->
+  answers = $('div.answers')
+
   $('a.edit_answer_link').click (e)->
     e.preventDefault()
 
@@ -30,3 +32,14 @@ $(window.document).ready ->
     $('.errors').html = ''
   .bind 'ajax:error', (e) ->
     $('.errors').html(e.detail[0])
+
+
+  App.cable.subscriptions.create('AnswersChannel', {
+    connected: ->
+      console.log 'connected'
+      @perform 'follow'
+      ,
+
+    received: (data)->
+      answers.append data
+  })

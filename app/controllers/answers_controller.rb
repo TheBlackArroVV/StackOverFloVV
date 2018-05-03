@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
   before_action :set_question, only: :create
   before_action :set_answer, only: %i[destroy update choose_best]
 
+  after_action :publish_answer, only: [:create]
+
   def create
     @answer = @question.answers.new(answer_params)
     flash[:notice] = 'You need to sign in or sign up before continuing.' unless current_user
@@ -37,6 +39,17 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast(
+      'answers',
+      ApplicationController.render(
+        partial: 'answers/answer',
+        locals: { answer: @answer }
+      )
+    )
   end
 
   def set_question
