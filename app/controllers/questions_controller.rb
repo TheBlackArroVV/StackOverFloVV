@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: %i[new update create destroy]
   before_action :set_question, only: %i[show update destroy]
 
+  after_action :publish_question, only: [:create]
+
   def index
     @questions = Question.all
   end
@@ -18,7 +20,7 @@ class QuestionsController < ApplicationController
     @question.user = current_user
 
     if @question.save
-      redirect_to @question
+      redirect_to question_path(@question)
     else
       render :new
     end
@@ -46,6 +48,17 @@ class QuestionsController < ApplicationController
 
   def set_question
     @question = Question.find(params[:id])
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/questions',
+        locals: { question: @question }
+      )
+    )
   end
 
   def question_params
