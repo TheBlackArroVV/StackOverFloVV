@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answers = @question.answers
-    if params[:answer] 
+    if params[:answer]
       @answer.attachments.build if params[:answer][:attachments_attributes]
     end
   end

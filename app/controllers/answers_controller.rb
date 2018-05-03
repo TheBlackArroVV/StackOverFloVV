@@ -12,7 +12,9 @@ class AnswersController < ApplicationController
     flash[:notice] = 'You need to sign in or sign up before continuing.' unless current_user
     @answer.user = current_user
     @answer.save
-    @answer.attachments.build
+    if params[:answer]
+      @answer.attachments.build if params[:answer][:attachments_attributes]
+    end
   end
 
   def update
@@ -43,11 +45,24 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
+    # mock_env = Rack::MockRequest.env_for('/')
+    # catch(:env) do
+    #   Rails.application.middleware.build(lambda { |env|
+    #     throw :env, env
+    #   }).call mock_env
+    # end
+    # mock_env["warden"]
     ActionCable.server.broadcast(
       'answers',
       ApplicationController.render(
-        partial: 'answers/answer',
-        locals: { answer: @answer }
+        partial:'answers/answer',
+        locals: { answer: @answer },
+        assigns: { env: {"HTTP_HOST"=>"localhost:3000",
+                        "HTTPS"=>"off",
+                        "REQUEST_METHOD"=>"GET",
+                        "SCRIPT_NAME"=>"",
+                        "warden" => warden}
+        }
       )
     )
   end

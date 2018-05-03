@@ -3,22 +3,24 @@
     "Best answer"
   %br/
   = answer.body
-  %div.answer_votes
-  = answer.sum_of_votes
--#- answer.attachments.each do |attachment|
-  %br/
-  = link_to attachment.file.identifier, attachment.file.url
-  = link_to 'Delete attachment', attachment_path(attachment), method: :delete, remote: true
-  %br/
+  %div{:class => "answer_votes_#{"#{answer.id}"}"}
+    = answer.sum_of_votes
+  %br
   - if user_signed_in?
     - if current_user == answer.user
       = link_to 'Edit answer', '', class: 'edit_answer_link', data: { answer_id: answer.id, turbolinks: false }
       = link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
       = render 'answers/edit', answer: answer
     - else
-      = link_to 'Vote for answer', like_answer_path(answer), method: :post, remote: true, class: 'vote_for_answer'
-      = link_to 'Vote against answer', dislike_answer_path(answer), method: :post, remote: true, class: 'vote_against_answer'
-      = link_to 'Delete my vote', unvote_answer_path(answer), method: :delete, remote: true, class: 'unvote_answer'
-    - if current_user == @question.user
+      = link_to 'Vote for answer', like_answer_path(answer), method: :post, remote: true, class: 'vote_for_answer', data: { id: answer.id }
+      = link_to 'Vote against answer', dislike_answer_path(answer), method: :post, remote: true, class: 'vote_against_answer', data: { id: answer.id }
+      = link_to 'Delete my vote', unvote_answer_path(answer), method: :delete, remote: true, class: 'unvote_answer', data: { id: answer.id }
+    - if current_user == answer.question.user
       = link_to 'Make this answer best', choose_best_answer_path(answer), class: 'choose_best_link', remote: true, method: :post
+- answer.attachments.each do |attachment|
+  %br/
+  = link_to attachment.file.identifier, attachment.file.url
+  = link_to 'Delete attachment', attachment_path(attachment), method: :delete, remote: true
+  %br/
+
   %br/

@@ -16,19 +16,22 @@ $(window.document).ready ->
     form.toggle()
 
   $('a.vote_for_answer').bind 'ajax:success', (e) ->
-    $('.answer_votes').html(e.detail[0])
+    id = $(this).data('id')
+    $('.answer_votes_' + id).html(e.detail[0])
     $('.errors').html = ''
   .bind 'ajax:error', (e) ->
     $('.errors').html(e.detail[0])
 
   $('a.vote_against_answer').bind 'ajax:success', (e) ->
-    $('.answer_votes').html(e.detail[0])
+    id = $(this).data('id')
+    $('.answer_votes_' + id).html(e.detail[0])
     $('.errors').html = ''
   .bind 'ajax:error', (e) ->
     $('.errors').html(e.detail[0])
 
   $('a.unvote_answer').bind 'ajax:success', (e) ->
-    $('.answer_votes').html(e.detail[0])
+    id = $(this).data('id')
+    $('div.answer_votes_' + id).html(e.detail[0])
     $('.errors').html = ''
   .bind 'ajax:error', (e) ->
     $('.errors').html(e.detail[0])
