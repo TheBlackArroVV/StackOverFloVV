@@ -1,9 +1,8 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
+  Capybara.server = :puma
 
   config.include AuthenticationMacros, type: :feature
   config.include QuestionMacros, type: :feature

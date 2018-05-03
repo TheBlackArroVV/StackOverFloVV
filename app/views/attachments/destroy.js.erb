@@ -1,2 +1,2 @@
-$('.question_data').html('<%= j render 'questions/question' %>');
+$('.question_data').html('<%= j render 'questions/question', question: @question %>');
 $('.answers').html('<%= j render 'answers/answers' %>');

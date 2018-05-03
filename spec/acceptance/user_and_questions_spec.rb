@@ -55,6 +55,33 @@ feature 'User and questions' do
     expect(page).to have_content @questions
   end
 
+  fcontext 'action cable tests' do
+    scenario 'multiply sessions', js: true do
+      Capybara.using_session('user') do
+        user_authentication(user)
+        visit questions_path
+      end
+
+      Capybara.using_session('quest') do
+        visit questions_path
+      end
+
+      Capybara.using_session('user') do
+        visit new_question_path
+
+        fill_in 'Title', with: 'NewTitle'
+        fill_in 'Body', with: 'NewBody'
+
+        click_on 'Create question'
+        expect(page).to have_content 'NewTitle'
+      end
+
+      Capybara.using_session('quest') do
+        expect(page).to have_content 'NewTitle'
+      end
+    end
+  end
+
   scenario 'user can watch question and answers for question' do
     user_authentication(user)
     create_question
