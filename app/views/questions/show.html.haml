@@ -4,10 +4,19 @@
 
   %div.question_data
     = render @question
+  %div.question_errors
+  %div.votes
+    = @question.sum_of_votes
   %div.question_links
-    - if @question.user == current_user
-      = link_to 'Edit question', '', class: 'edit_question_link'
-      = link_to 'Delete question', question_path, method: :delete, remote: true
+    - if user_signed_in?
+      - if @question.user == current_user
+        = link_to 'Edit question', '', class: 'edit_question_link'
+        = link_to 'Delete question', question_path, method: :delete, remote: true
+      - else
+        = link_to 'Vote for question', like_question_path(@question), method: :post, remote: true, class: 'vote_for_question'
+        = link_to 'Vote against question', dislike_question_path(@question), method: :post, remote: true, class: 'vote_against_question'
+        = link_to 'Delete my vote', unvote_question_path(@question), method: :delete, remote: true, class: 'unvote'
+
 
 %br
 

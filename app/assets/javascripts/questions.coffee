@@ -22,3 +22,21 @@ $(window.document).ready ->
     question = $('.question_data')
     form.toggle()
     question.toggle()
+
+  $('a.vote_for_question').bind 'ajax:success', (e) ->
+    $('.votes').html(e.detail[0])
+    $('.question_errors').html = ''
+  .bind 'ajax:error', (e) ->
+    $('.question_errors').html(e.detail[0])
+
+  $('a.vote_against_question').bind 'ajax:success', (e) ->
+    $('.votes').html(e.detail[0])
+    $('.question_errors').html = ''
+  .bind 'ajax:error', (e) ->
+    $('.question_errors').html(e.detail[0])
+
+  $('a.unvote').bind 'ajax:success', (e) ->
+    $('.votes').html(e.detail[0])
+    $('.question_errors').html = ''
+  .bind 'ajax:error', (e) ->
+    $('.question_errors').html(e.detail[0])

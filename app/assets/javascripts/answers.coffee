@@ -12,3 +12,21 @@ $(window.document).ready ->
     answer_id = $(this).data('answerId')
     form = $('form#edit_answer_' + answer_id)
     form.toggle()
+
+  $('a.vote_for_answer').bind 'ajax:success', (e) ->
+    $('.answer_votes').html(e.detail[0])
+    $('.errors').html = ''
+  .bind 'ajax:error', (e) ->
+    $('.errors').html(e.detail[0])
+
+  $('a.vote_against_answer').bind 'ajax:success', (e) ->
+    $('.answer_votes').html(e.detail[0])
+    $('.errors').html = ''
+  .bind 'ajax:error', (e) ->
+    $('.errors').html(e.detail[0])
+
+  $('a.unvote_answer').bind 'ajax:success', (e) ->
+    $('.answer_votes').html(e.detail[0])
+    $('.errors').html = ''
+  .bind 'ajax:error', (e) ->
+    $('.errors').html(e.detail[0])
