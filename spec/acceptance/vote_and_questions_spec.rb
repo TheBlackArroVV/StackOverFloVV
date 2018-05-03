@@ -8,21 +8,22 @@ feature 'vote for question' do
   scenario 'all users can see number of votes for question', js: true do
     visit question_path(question)
 
-    expect(page).to have_content 'Question votes'
+    within '.votes' do
+      expect(page).to have_content '0'
+    end
   end
 
   scenario 'unloged user try to vote for question', js: true do
     visit question_path(question)
 
-    expect(page).to_not have_content 'vote for question'
+    expect(page).to_not have_content 'Vote for question'
   end
 
   scenario 'loged user try to vote for question', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for question'
+    click_on 'Vote for question'
 
-    expect(page).to have_content 'vote for question'
     expect(page).to have_content '1'
   end
 
@@ -30,22 +31,21 @@ feature 'vote for question' do
     user_authentication(user)
     visit question_path(question)
 
-    expect(page).to_not have_content 'vote for question'
+    expect(page).to_not have_content 'Vote for question'
     expect(page).to have_content '0'
   end
 
   scenario 'unloged user try to vote against question', js: true do
     visit question_path(question)
 
-    expect(page).to_not have_content 'vote against question'
+    expect(page).to_not have_content 'Vote against question'
   end
 
   scenario 'loged user try to vote against question', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote against question'
+    click_on 'Vote against question'
 
-    expect(page).to have_content 'vote against question'
     expect(page).to have_content '-1'
   end
 
@@ -53,16 +53,16 @@ feature 'vote for question' do
     user_authentication(user)
     visit question_path(question)
 
-    expect(page).to_not have_content 'vote against question'
+    expect(page).to_not have_content 'Vote against question'
     expect(page).to have_content '0'
   end
 
   scenario 'user try to delete her vote and vote against again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for question'
-    click_on 'delete my vote'
-    click_on 'vote against question'
+    click_on 'Vote for question'
+    click_on 'Delete my vote'
+    click_on 'Vote against question'
 
     expect(page).to have_content '-1'
   end
@@ -70,9 +70,9 @@ feature 'vote for question' do
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for question'
-    click_on 'delete my vote'
-    click_on 'vote for question'
+    click_on 'Vote for question'
+    click_on 'Delete my vote'
+    click_on 'Vote for question'
 
     expect(page).to have_content '1'
   end
@@ -80,9 +80,9 @@ feature 'vote for question' do
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote against question'
-    click_on 'delete my vote'
-    click_on 'vote against question'
+    click_on 'Vote against question'
+    click_on 'Delete my vote'
+    click_on 'Vote against question'
 
 
     expect(page).to have_content '-1'
@@ -91,9 +91,9 @@ feature 'vote for question' do
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for question'
-    click_on 'delete my vote'
-    click_on 'vote for question'
+    click_on 'Vote for question'
+    click_on 'Delete my vote'
+    click_on 'Vote for question'
 
     expect(page).to have_content '1'
   end

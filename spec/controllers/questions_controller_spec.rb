@@ -117,4 +117,15 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
+
+  context 'DELETE #unvote' do
+    login_user
+    let(:new_user) { create :user }
+    let(:question) { create :question, user: new_user }
+    let!(:vote) { create :vote, votable: question, user: @user }
+
+    it 'should delete vote from db' do
+      expect { delete :unvote, params: { id: question, format: :json } }.to change(Vote, :count).by(-1)
+    end
+  end
 end

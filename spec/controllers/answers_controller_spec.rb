@@ -85,4 +85,16 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  context 'DELETE #unvote' do
+    login_user
+    let(:new_user) { create :user }
+    let(:question) { create :question, user: new_user }
+    let(:answer) { create :answer, user: new_user, question: question }
+    let!(:vote) { create :vote, votable: answer, user: @user }
+
+    it 'should delete vote from db' do
+      expect { delete :unvote, params: { id: answer, format: :json } }.to change(Vote, :count).by(-1)
+    end
+  end
+
 end

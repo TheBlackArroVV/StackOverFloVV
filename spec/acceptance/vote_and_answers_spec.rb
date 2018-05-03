@@ -17,16 +17,15 @@ feature 'vote for answer' do
   scenario 'unloged user try to vote for question', js: true do
     visit question_path(question)
 
-    expect(page).to_not have_content 'vote for answer'
+    expect(page).to_not have_content 'Vote for answer'
   end
 
   scenario 'loged user try to vote for answer', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for answer'
+    click_on 'Vote for answer'
 
     within '.answer_votes' do
-      expect(page).to have_content 'vote for answer'
       expect(page).to have_content '1'
     end
   end
@@ -36,7 +35,7 @@ feature 'vote for answer' do
     visit question_path(question)
 
     within '.answer_votes' do
-      expect(page).to_not have_content 'vote for answer'
+      expect(page).to_not have_content 'Vote for answer'
       expect(page).to have_content '0'
     end
   end
@@ -44,16 +43,15 @@ feature 'vote for answer' do
   scenario 'unloged user try to vote against answer', js: true do
     visit question_path(question)
 
-    expect(page).to_not have_content 'vote against answer'
+    expect(page).to_not have_content 'Vote against answer'
   end
 
   scenario 'loged user try to vote against answer', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote against answer'
+    click_on 'Vote against answer'
 
     within '.answer_votes' do
-      expect(page).to have_content 'vote against answer'
       expect(page).to have_content '-1'
     end
   end
@@ -63,7 +61,7 @@ feature 'vote for answer' do
     visit question_path(question)
 
     within '.answer_votes' do
-      expect(page).to_not have_content 'vote against answer'
+      expect(page).to_not have_content 'Vote against answer'
       expect(page).to have_content '0'
     end
   end
@@ -71,9 +69,11 @@ feature 'vote for answer' do
   scenario 'user try to delete her vote and vote against again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for answer'
-    click_on 'delete my vote'
-    click_on 'vote against answer'
+    within '.answers' do
+      click_on 'Vote for answer'
+      click_on 'Delete my vote'
+      click_on 'Vote against answer'
+    end
 
     within '.answer_votes' do
       expect(page).to have_content '-1'
@@ -83,9 +83,11 @@ feature 'vote for answer' do
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for answer'
-    click_on 'delete my vote'
-    click_on 'vote for answer'
+    within '.answers' do
+      click_on 'Vote for answer'
+      click_on 'Delete my vote'
+      click_on 'Vote for answer'
+    end
 
     within '.answer_votes' do
       expect(page).to have_content '1'
@@ -95,9 +97,11 @@ feature 'vote for answer' do
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote against answer'
-    click_on 'delete my vote'
-    click_on 'vote against answer'
+    within '.answers' do
+      click_on 'Vote against answer'
+      click_on 'Delete my vote'
+      click_on 'Vote against answer'
+    end
 
 
     within '.answer_votes' do
@@ -108,9 +112,11 @@ feature 'vote for answer' do
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'vote for answer'
-    click_on 'delete my vote'
-    click_on 'vote for answer'
+    within '.answers' do
+      click_on 'Vote for answer'
+      click_on 'Delete my vote'
+      click_on 'Vote for answer'
+    end
 
     within '.answer_votes' do
       expect(page).to have_content '1'
