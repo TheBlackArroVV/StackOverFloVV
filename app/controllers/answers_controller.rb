@@ -11,10 +11,19 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     flash[:notice] = 'You need to sign in or sign up before continuing.' unless current_user
     @answer.user = current_user
-    @answer.save
+    # @answer.save
+    respond_to do |format|
+      if @answer.save
+        format.json { render json: @answer }
+      else
+        format.json { render json: @answer.errors.full_messages, status: 422 }
+      end
+    end
+
     if params[:answer]
       @answer.attachments.build if params[:answer][:attachments_attributes]
     end
+    gon.question_id = @answer.question.id
   end
 
   def update
@@ -45,26 +54,7 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
-    # mock_env = Rack::MockRequest.env_for('/')
-    # catch(:env) do
-    #   Rails.application.middleware.build(lambda { |env|
-    #     throw :env, env
-    #   }).call mock_env
-    # end
-    # mock_env["warden"]
-    ActionCable.server.broadcast(
-      'answers',
-      ApplicationController.render(
-        partial:'answers/answer',
-        locals: { answer: @answer },
-        assigns: { env: {"HTTP_HOST"=>"localhost:3000",
-                        "HTTPS"=>"off",
-                        "REQUEST_METHOD"=>"GET",
-                        "SCRIPT_NAME"=>"",
-                        "warden" => warden}
-        }
-      )
-    )
+    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer.to_json
   end
 
   def set_question

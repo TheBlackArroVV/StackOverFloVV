@@ -37,12 +37,21 @@ $(window.document).ready ->
     $('.errors').html(e.detail[0])
 
 
-  App.cable.subscriptions.create('AnswersChannel', {
+  App.cable.subscriptions.create({ channel: 'AnswersChannel' }, {
     connected: ->
-      console.log 'connected'
-      @perform 'follow'
-      ,
+      @follow()
+
+    follow: ->
+      return unless gon.question_id
+      console.log 'followed'
+      @perform 'follow', id: gon.question_id
 
     received: (data)->
-      answers.append data
+      console.log 'received'
+      answer = JSON.parse(data)
+      console.log answer
+      @append_try(answer)
+
+    append_try: (data)->
+      $('div.answers').append(data.body)
   })

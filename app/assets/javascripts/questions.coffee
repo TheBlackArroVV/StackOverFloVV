@@ -45,9 +45,7 @@ $(window.document).ready ->
 
   App.cable.subscriptions.create('QuestionsChannel', {
     connected: ->
-      console.log 'connected'
       @perform 'follow'
-      ,
 
     received: (data)->
       questions.append data
