@@ -48,6 +48,7 @@ $(window.document).ready ->
       @perform 'follow'
 
     received: (data)->
+      console.log data
       questions.append data
   })
 

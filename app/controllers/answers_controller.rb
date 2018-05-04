@@ -11,15 +11,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     flash[:notice] = 'You need to sign in or sign up before continuing.' unless current_user
     @answer.user = current_user
-    # @answer.save
-    respond_to do |format|
-      if @answer.save
-        format.json { render json: @answer }
-      else
-        format.json { render json: @answer.errors.full_messages, status: 422 }
-      end
-    end
-
+    @answer.save
     if params[:answer]
       @answer.attachments.build if params[:answer][:attachments_attributes]
     end
@@ -54,7 +46,8 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
-    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer.to_json
+    pp @answer
+    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer.as_json.merge({sum: @answer.sum_of_votes})
   end
 
   def set_question
