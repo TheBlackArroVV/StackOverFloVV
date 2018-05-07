@@ -61,21 +61,31 @@ $(window.document).ready ->
       html += data.sum
       html += "</div>"
       html += "<br/>"
-      html += "<a class=\"vote_for_answer\" data-id=" +
+      if gon.user_id
+        html += "<a class=\"vote_for_answer\" data-id=" +
+          data.id +
+          " data-remote=\"true\" rel=\"nofollow\" data-method=\"post\" href=\"/answers/" +
+          data.id +
+          "/like\">Vote for answer</a>"
+        html += "<a class=\"vote_against_answer\" data-id=" +
+          data.id +
+          " data-remote=\"true\" rel=\"nofollow\" data-method=\"post\" href=\"/answers/" +
+          data.id +
+          "/dislike\">Vote against answer</a>"
+        html += "<a class=\"unvote_answer\" data-id=" +
+          data.id +
+          " data-remote=\"true\" rel=\"nofollow\" data-method=\"delete\" href=\"/answers/" +
+          data.id +
+          "/unvote\">Delete my vote</a>"
+        html += "<br/>"
+      if gon.user_id
+        html += "<form action=\"/comments?commentable_id=" +
         data.id +
-        " data-remote=\"true\" rel=\"nofollow\" data-method=\"post\" href=\"/answers/" +
-        data.id +
-        "/like\">Vote for answer</a>"
-      html += "<a class=\"vote_against_answer\" data-id=" +
-        data.id +
-        " data-remote=\"true\" rel=\"nofollow\" data-method=\"post\" href=\"/answers/" +
-        data.id +
-        "/dislike\">Vote against answer</a>"
-      html += "<a class=\"unvote_answer\" data-id=" +
-        data.id +
-        " data-remote=\"true\" rel=\"nofollow\" data-method=\"delete\" href=\"/answers/" +
-        data.id +
-        "/unvote\">Delete my vote</a>"
-      html += "<br/>"
+        "&amp;commentable_type=Answer\" accept-charset=\"UTF-8\" data-remote=\"true\" method=\"post\"><input name=\"utf8\" type=\"hidden\" value=\"✓\"><label for=\"comment_body\">Body</label>
+        <br>
+        <textarea name=\"comment[body]\" id=\"comment_body\"></textarea>
+        <br>
+        <input type=\"submit\" name=\"commit\" value=\"Create a comment\" data-disable-with=\"Create a comment\">
+        </form>"
       $('div.answers').append html
   })
