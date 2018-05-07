@@ -10,14 +10,13 @@ feature 'User delete questions and answers' do
     create_question
     click_on 'Delete question'
 
-    expect(page).to have_content 'Your question was deleted'
+    expect(page).to have_content 'Question was successfully destroyed'
   end
 
   scenario 'User try to delete her answer', js: true do
     user_authentication(user)
     visit question_path(question)
     create_answer('AnswerBody')
-    save_and_open_page
     click_on 'Delete answer'
 
     expect(page).to have_content 'Your answer was deleted'

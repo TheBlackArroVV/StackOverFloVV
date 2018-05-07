@@ -13,12 +13,12 @@ class CommentsController < ApplicationController
 
   private
 
-  def model
-    params[:commentable_type].classify.constantize
+  def comment_params
+    params.require(:comment).permit(:body)
   end
 
-  def comment_params
-    params.require(:comment).permit(:body, :user_id)
+  def model
+    params[:commentable_type].classify.constantize
   end
 
   def set_comment

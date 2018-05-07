@@ -4,7 +4,6 @@ class AttachmentsController < ApplicationController
   respond_to :js
 
   def destroy
-    @question = @attachment.set_question
     respond_with(@attachment.destroy)
   end
 
@@ -12,5 +11,6 @@ class AttachmentsController < ApplicationController
 
   def set_attachment
     @attachment = Attachment.find(params[:id])
+    @question = @attachment.set_question
   end
 end
