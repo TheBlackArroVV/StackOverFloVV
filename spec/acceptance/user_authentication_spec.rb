@@ -37,7 +37,9 @@ feature 'User and authentication' do
     fill_in :user_password, with: user.password
     fill_in :user_password_confirmation, with: user.password
 
-    click_on 'Sign up'
+    within 'form#new_user' do
+      click_on 'Sign up'
+    end
 
     expect(page).to have_content 'Welcome! You have signed up successfully'
   end

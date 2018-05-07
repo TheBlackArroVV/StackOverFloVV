@@ -10,4 +10,5 @@
           = link_to a.file.identifier, a.file.url
           = link_to 'Delete attachment', attachment_path(a), method: :delete, remote: true
 
-    = render 'comments/form', commentable_id: question.id, commentable_type: question.class
+    %div.question_comment_form
+      = render 'comments/form', commentable_id: question.id, commentable_type: question.class

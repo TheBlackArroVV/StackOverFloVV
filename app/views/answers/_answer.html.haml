@@ -27,4 +27,5 @@
 %div{:class => "answer_#{answer.id}_comments"}
   = render answer.comments
 
-= render 'comments/form', commentable_id: answer.id, commentable_type: answer.class
+%div.answer_comment_form
+  = render 'comments/form', commentable_id: answer.id, commentable_type: answer.class

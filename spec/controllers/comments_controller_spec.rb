@@ -21,7 +21,7 @@ RSpec.describe CommentsController, type: :controller do
 
       context 'invalid data' do
         it 'should not save a comment' do
-          expect { post :create, params: { comment: attributes_for(:comment), commentable_id: question.id, commentable_type: 'Question', user_id: @user, format: :js } }.not_to change(Comment, :count)
+          expect { post :create, params: { comment: attributes_for(:invalid_comment), commentable_type: 'Question', commentable_id: question.id, user_id: @user, format: :js } }.not_to change(Comment, :count)
         end
       end
     end
