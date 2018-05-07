@@ -1,9 +1,11 @@
 class AttachmentsController < ApplicationController
   before_action :set_attachment, :destroy
 
+  respond_to :js
+
   def destroy
     @question = @attachment.set_question
-    @attachment.destroy
+    respond_with(@attachment.destroy)
   end
 
   private

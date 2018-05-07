@@ -44,10 +44,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'should create a new question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
-
-    it 'should assigns a new attachment' do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-    end
+    #
+    # it 'should assigns a new attachment' do
+    #   expect(assigns(:question).attachments.first).to be_a_new(Attachment)
+    # end
 
     it 'should render new' do
       expect(response).to render_template :new
@@ -57,7 +57,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'POST #create' do
     context 'valid data' do
       before do
-        post :create, params: { question: attributes_for(:question) }
+        post :create, params: { question: attributes_for(:question), user_id: @user }
       end
 
       it 'should create a new Question' do

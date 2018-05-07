@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'acceptance/acceptance_helper'
 
 feature 'User delete questions and answers' do
@@ -19,6 +17,7 @@ feature 'User delete questions and answers' do
     user_authentication(user)
     visit question_path(question)
     create_answer('AnswerBody')
+    save_and_open_page
     click_on 'Delete answer'
 
     expect(page).to have_content 'Your answer was deleted'

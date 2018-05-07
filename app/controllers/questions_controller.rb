@@ -12,15 +12,14 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    @question.attachments.build
   end
 
   def create
     @question = Question.new(question_params)
     @question.user = current_user
-
     if @question.save
-      redirect_to question_path(@question)
+      flash[:notice] = 'Your question create'
+      redirect_to @question
     else
       render :new
     end
@@ -35,14 +34,14 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def update
-    @question.update(question_params)
-  end
-
   def destroy
     @question.destroy
     flash[:notice] = 'Your question was deleted'
     redirect_to questions_path
+  end
+
+  def update
+    @question.update(question_params)
   end
 
   private
