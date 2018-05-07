@@ -22,5 +22,9 @@
   = link_to attachment.file.identifier, attachment.file.url
   = link_to 'Delete attachment', attachment_path(attachment), method: :delete, remote: true
   %br/
-
   %br/
+
+%div{:class => "answer_#{answer.id}_comments"}
+  = render answer.comments
+
+= render 'comments/form', commentable_id: answer.id, commentable_type: answer.class
