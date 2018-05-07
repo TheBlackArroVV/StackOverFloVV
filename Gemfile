@@ -57,6 +57,11 @@ gem 'cocoon'
 # for seeds
 gem 'faker'
 
+# variables to js
+gem 'gon'
+
+gem 'responders'
+
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
