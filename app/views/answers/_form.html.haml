@@ -10,4 +10,4 @@
       = render 'attachments/attachment_fields', f: a
     .links
       = link_to_add_association 'add file', f, :attachments, name: 'add file'
-  = f.submit 'Create answer'
+  = f.submit 'Create answer', class: 'answer_create_link'
