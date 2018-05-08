@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   root to: 'questions#index'
 
   concern :votable do
@@ -14,9 +14,7 @@ Rails.application.routes.draw do
   resources :attachments, shallow: true
 
   resources :questions, concerns: :votable do
-    # resources :comments, only: :create
     resources :answers, concerns: :votable, shallow: true do
-      # resources :comments, only: :create
       member do
         post :choose_best
       end
