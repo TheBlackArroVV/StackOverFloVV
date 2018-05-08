@@ -9,10 +9,10 @@ class User < ApplicationRecord
   has_many :votes
 
   def self.find_for_oauth(oauth)
-    authorization = Authorization.find_by(provider: oauth.provider, uid: oauth.uid.to_s)
+    authorization = Authorization.find_by(provider: oauth[:provider], uid: oauth[:uid].to_s)
     return authorization.user if authorization
 
-    email = oauth.info.email
+    email = oauth[:info][:email]
 
     if email
       user = User.find_by(email: email)
@@ -20,7 +20,7 @@ class User < ApplicationRecord
         password = Devise.friendly_token[0, 20]
         user = User.create!(email: email, password: password, password_confirmation: password)
       end
-      user.authorizations.create(provider: oauth.provider, uid: oauth.uid.to_s)
+      user.authorizations.create(provider: oauth[:provider], uid: oauth[:uid].to_s)
       user
     end
   end

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'acceptance_helper'
 
 feature 'Add files to answers' do
