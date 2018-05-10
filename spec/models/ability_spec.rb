@@ -22,10 +22,11 @@ RSpec.describe Ability, type: :model do
     let(:other_comment) { create :comment, user: other_user, commentable: question }
     let(:attachment) { create :attachment, attachable: question }
 
+    it { should be_able_to :manage, Attachment }
+
     it { should be_able_to :create, Question }
     it { should be_able_to :create, Answer }
     it { should be_able_to :create, Comment }
-    it { should be_able_to :create, Attachment }
 
     it { should be_able_to :update, question, user: user }
     it { should_not be_able_to :update, other_question, user: user }
@@ -33,12 +34,30 @@ RSpec.describe Ability, type: :model do
     it { should be_able_to :update, answer, user: user }
     it { should_not be_able_to :update, other_answer, user: user }
 
-    it { should be_able_to :delete, question, user: user }
-    it { should_not be_able_to :delete, other_question, user: user }
+    it { should be_able_to :destroy, question, user: user }
+    it { should_not be_able_to :destroy, other_question, user: user }
 
-    it { should be_able_to :delete, answer, user: user }
-    it { should_not be_able_to :delete, other_answer, user: user }
+    it { should be_able_to :destroy, answer, user: user }
+    it { should_not be_able_to :destroy, other_answer, user: user }
 
-    it { should be_able_to :delete, attachment }
+    it { should be_able_to :choose_best, answer, user: user }
+    it { should_not be_able_to :choose_best, other_answer, user: user }
+
+    it { should be_able_to :like, other_answer, user: user }
+    it { should be_able_to :dislike, other_answer, user: user }
+    it { should be_able_to :unvote, other_answer, user: user }
+
+    it { should_not be_able_to :like, answer, user: user }
+    it { should_not be_able_to :dislike, answer, user: user }
+    it { should_not be_able_to :unvote, answer, user: user }
+
+    it { should be_able_to :like, other_question, user: user }
+    it { should be_able_to :dislike, other_question, user: user }
+    it { should be_able_to :unvote, other_question, user: user }
+
+    it { should_not be_able_to :like, question, user: user }
+    it { should_not be_able_to :dislike, question, user: user }
+    it { should_not be_able_to :unvote, question, user: user }
+
   end
 end
