@@ -9,6 +9,8 @@ feature 'Delete files from answers' do
   given(:answer) { create :answer, question: question, user: user }
 
   background do
+    user.confirm
+    new_user.confirm
     user_authentication(new_user)
     visit question_path(question)
   end

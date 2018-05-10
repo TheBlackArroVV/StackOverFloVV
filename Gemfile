@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -57,11 +55,28 @@ gem 'cocoon'
 # for seeds
 gem 'faker'
 
+# variables to js
+gem 'gon'
+
+gem 'responders'
+
+# oauth
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-twitter'
+
+# authorization
+gem 'cancancan'
+
+# REST API
+gem 'doorkeeper', '4.2.6'
+
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # BDD and RSpec
+  gem 'capybara-email'
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
@@ -74,6 +89,7 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'letter_opener'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
@@ -88,6 +104,7 @@ group :test do
   # macros for rspec
   gem 'launchy'
   gem 'shoulda-matchers'
+  gem 'json_spec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
