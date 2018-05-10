@@ -6,6 +6,11 @@ feature 'User and edit' do
   given(:question) { create :question, user: user }
   given(:answer) { create :answer, user: user, question: question }
 
+  before do
+    user.confirm
+    new_user.confirm
+  end
+
   context 'user and question edit' do
     scenario 'unloged user try to edit question', js: true do
       visit question_path(question)

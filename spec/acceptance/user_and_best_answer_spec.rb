@@ -8,6 +8,11 @@ feature 'User and best answer' do
   given(:question) { create :question, user: user }
   given!(:answer) { create :answer, user: user, question: question }
 
+  before do
+    user.confirm
+    new_user.confirm
+  end
+
   scenario 'unloged user try to choose a best answer', js: true do
     visit question_path(question)
 

@@ -5,6 +5,12 @@ feature 'User delete questions and answers' do
   given(:new_user) { create :user }
   given(:question) { create :question }
   given!(:answer) { create :answer, question: question }
+
+  before do
+    user.confirm
+    new_user.confirm
+  end
+
   scenario 'User try to delete her question' do
     user_authentication(user)
     create_question
