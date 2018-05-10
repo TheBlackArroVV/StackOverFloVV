@@ -7,9 +7,8 @@ feature "omniauth github" do
       visit root_path
       click_link "log in"
       github_auth_hash
-      open_email('mockemail@gmail.com')
-      save_and_open_page
-      current_email.click_link "Confirm my account"
+      click_link "Sign in with GitHub"
+      User.last.confirm
       click_link "Sign in with GitHub"
       expect(page).to have_content("Successfully authenticated from GitHub account.")
     end
