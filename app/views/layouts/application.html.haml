@@ -3,10 +3,17 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Stackoverflow
+    = action_cable_meta_tag
+    = include_gon
+    = Gon::Base.render_data
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = link_to 'log out', destroy_user_session_path, method: :delete
+    - if user_signed_in?
+      = link_to 'log out', destroy_user_session_path, method: :delete
+    - else
+      = link_to 'log in', new_user_session_path
+      = link_to 'Sign up', new_user_registration_path
   %body
     %p.notice= notice
     %p.alert= alert
