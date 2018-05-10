@@ -17,8 +17,10 @@ def body
 end
 
 def user
-  @user = User.create(email: email, password: password)
-  @user.confirm
+  user = User.new(email: email, password: password)
+  user.skip_confirmation!
+  user.save!
+  user
 end
 
 def question
