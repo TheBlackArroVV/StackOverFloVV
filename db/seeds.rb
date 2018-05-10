@@ -17,7 +17,8 @@ def body
 end
 
 def user
-  User.create(email: email, password: password)
+  @user = User.create(email: email, password: password)
+  @user.confirm
 end
 
 def question
