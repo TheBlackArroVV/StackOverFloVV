@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         get :me, on: :collection
         get :users
       end
+      resources :questions 
     end
   end
 end
