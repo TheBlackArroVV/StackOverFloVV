@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'acceptance_helper'
 
 feature 'Add files to answers' do
@@ -7,6 +5,7 @@ feature 'Add files to answers' do
   given(:question) { create :question, user: user }
 
   background do
+    user.confirm
     user_authentication(user)
     visit question_path(question)
   end
