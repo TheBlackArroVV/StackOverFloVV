@@ -70,6 +70,7 @@ gem 'cancancan'
 
 # REST API
 gem 'doorkeeper', '4.2.6'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'pry'

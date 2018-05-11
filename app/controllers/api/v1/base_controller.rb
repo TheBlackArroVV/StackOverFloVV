@@ -1,7 +1,7 @@
 class Api::V1::BaseController < ApplicationController
   before_action :doorkeeper_authorize!
 
-  skip_authorization_check
+  authorize_resource
 
   respond_to :json
 
