@@ -1,6 +1,8 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
   self.responder = ApplicationResponder
   respond_to :html
 

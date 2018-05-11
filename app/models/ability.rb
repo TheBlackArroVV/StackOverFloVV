@@ -4,7 +4,8 @@ class Ability
   def initialize(user)
     if user
       can :manage, Attachment
-      can [:create, :update, :destroy], [Question, Answer], user: user
+      can :create, [Question, Answer]
+      can [:update, :destroy], [Question, Answer], user: user
       can :choose_best, Answer, user: user
       can :create, Comment
       can [:like, :dislike, :unvote], [Question, Answer]
