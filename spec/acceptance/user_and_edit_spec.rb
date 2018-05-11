@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'acceptance_helper'
 
 feature 'User and edit' do
@@ -7,6 +5,11 @@ feature 'User and edit' do
   given(:new_user) { create :user }
   given(:question) { create :question, user: user }
   given(:answer) { create :answer, user: user, question: question }
+
+  before do
+    user.confirm
+    new_user.confirm
+  end
 
   context 'user and question edit' do
     scenario 'unloged user try to edit question', js: true do
