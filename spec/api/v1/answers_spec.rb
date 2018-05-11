@@ -15,7 +15,7 @@ describe 'Question API' do
     end
   end
 
-  describe 'GET /show' do
+  describe 'GET /index' do
     context 'authorized' do
       let(:access_token) { create :access_token }
       let!(:user) { create :user }
@@ -36,6 +36,41 @@ describe 'Question API' do
       %w(id body created_at updated_at).each do |attr|
         it "answer object contains #{attr}" do
           expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/#{attr}")
+        end
+      end
+    end
+  end
+
+  describe 'GET /show' do
+    context 'authorized' do
+      let(:access_token) { create :access_token }
+      let!(:user) { create :user }
+      let!(:question) { create :question, user: user }
+      let!(:answer) { create(:answer, question: question, user: user) }
+      let!(:comment) { create(:comment, commentable: answer, user: user) }
+      let!(:attachment) { create(:attachment, attachable: answer) }
+
+      before { get '/api/v1/answers', params: { format: :json, access_token: access_token.token, id: answer.id } }
+
+      it 'returns 200' do
+        expect(response).to be_successful
+      end
+
+      %w(id body created_at updated_at).each do |attr|
+        it "answer object contains #{attr}" do
+          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/#{attr}")
+        end
+      end
+
+      %w(id body created_at updated_at).each do |attr|
+        it "comment object contains #{attr}" do
+          expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("0/comments/0/#{attr}")
+        end
+      end
+
+      %w(file).each do |attr|
+        it "attachment object contains #{attr}" do
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("0/attachments/0/#{attr}")
         end
       end
     end
