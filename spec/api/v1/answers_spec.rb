@@ -75,4 +75,26 @@ describe 'Question API' do
       end
     end
   end
+
+  describe 'POST /create' do
+    let!(:access_token) { create :access_token }
+    let!(:question) { create :question, user: User.last }
+    let!(:answer) { create :answer, user: User.last, question: question }
+
+    before { post '/api/v1/answers', params: { format: :json, id: question.id, access_token: access_token.token, answer: { body: answer.body } } }
+
+    it 'returns 200' do
+      expect(response).to be_successful
+    end
+
+    %w(body user_id).each do |attr|
+      it "answer object contains #{attr}" do
+        expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("#{attr}")
+      end
+    end
+
+    it 'should save question to db' do
+      expect { post '/api/v1/answers', params: { format: :json, access_token: access_token.token, id: question.id, answer: { body: answer.body } }}.to change(Answer, :count).by(1)
+    end
+  end
 end
