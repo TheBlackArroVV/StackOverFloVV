@@ -90,10 +90,8 @@ describe 'Question API' do
         expect(response.body).to have_json_size(1).at_path("0/attachments")
       end
 
-      %w(file).each do |attr|
-        it "attachment object contains #{attr}" do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("0/attachments/0/#{attr}")
-        end
+      it "attachment object contains file" do
+        expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("0/attachments/0/file")
       end
     end
 
