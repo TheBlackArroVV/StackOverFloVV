@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  it_behaves_like 'voted'
+  context 'votes' do
+    login_user
+    let!(:question) { create :question, user: @user }
+    let!(:vote) { create :vote, user: @user, votable: question }
+    let!(:unvotable_id) { question.id }
+    it_behaves_like 'voted'
+  end
 
   login_user
   let(:question) { create :question, user: @user }

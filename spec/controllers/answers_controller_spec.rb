@@ -1,7 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  it_behaves_like 'voted'
+  context 'voted' do
+    login_user
+    let!(:question) { create :question, user: @user }
+    let!(:answer) { create :answer, user: @user, question: question }
+    let!(:vote) { create :vote, user: @user, votable: answer }
+    let!(:unvotable_id) { answer.id }
+    it_behaves_like 'voted'
+  end
 
   describe 'POST #choose_best' do
     login_user
