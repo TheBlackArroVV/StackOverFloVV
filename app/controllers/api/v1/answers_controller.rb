@@ -3,7 +3,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   before_action :set_answer, only: :show
 
   # authorize_resource
-  skip_authorization_check
+
   def index
     respond_with @question.answers
   end

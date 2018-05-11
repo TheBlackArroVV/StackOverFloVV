@@ -1,21 +1,9 @@
 require 'rails_helper.rb'
 
-describe 'Question API' do
-  context 'anuthorized' do
-    it 'returns 401 if request without access token' do
-      get '/api/v1/questions', params: { format: :json }
-
-      expect(response.status).to eq 401
-    end
-
-    it 'returns if access token not valid' do
-      get '/api/v1/questions', params: { format: :json, access_token: '1234' }
-
-      expect(response.status).to eq 401
-    end
-  end
-
+describe 'Answer API' do
   describe 'GET /index' do
+    it_behaves_like "API Authenticable"
+
     context 'authorized' do
       let(:access_token) { create :access_token }
       let!(:user) { create :user }
@@ -39,9 +27,15 @@ describe 'Question API' do
         end
       end
     end
+
+    def do_request(options = {})
+      get '/api/v1/answers', params: { format: :json }.merge(options)
+    end
   end
 
   describe 'GET /show' do
+    it_behaves_like "API Authenticable"
+
     context 'authorized' do
       let(:access_token) { create :access_token }
       let!(:user) { create :user }
@@ -72,27 +66,42 @@ describe 'Question API' do
         expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("0/attachments/0/file")
       end
     end
+
+    def do_request(options = {})
+      get '/api/v1/answers', params: { format: :json }.merge(options)
+    end
   end
 
   describe 'POST /create' do
-    let!(:access_token) { create :access_token }
-    let!(:question) { create :question, user: User.last }
-    let!(:answer) { create :answer, user: User.last, question: question }
+    let!(:do_request) { post '/api/v1/answers', params: { format: :json } }
+    let!(:do_request_with_token) { post '/api/v1/answers', params: { format: :json, access_toke: '1234' } }
 
-    before { post '/api/v1/answers', params: { format: :json, id: question.id, access_token: access_token.token, answer: { body: answer.body } } }
+    it_behaves_like "API Authenticable"
 
-    it 'returns 200' do
-      expect(response).to be_successful
-    end
+    context 'authorized' do
+      let!(:access_token) { create :access_token }
+      let!(:question) { create :question, user: User.last }
+      let!(:answer) { create :answer, user: User.last, question: question }
 
-    %w(body user_id).each do |attr|
-      it "answer object contains #{attr}" do
-        expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("#{attr}")
+      before { post '/api/v1/answers', params: { format: :json, id: question.id, access_token: access_token.token, answer: { body: answer.body } } }
+
+      it 'returns 200' do
+        expect(response).to be_successful
+      end
+
+      %w(body user_id).each do |attr|
+        it "answer object contains #{attr}" do
+          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("#{attr}")
+        end
+      end
+
+      it 'should save question to db' do
+        expect { post '/api/v1/answers', params: { format: :json, access_token: access_token.token, id: question.id, answer: { body: answer.body } }}.to change(Answer, :count).by(1)
       end
     end
 
-    it 'should save question to db' do
-      expect { post '/api/v1/answers', params: { format: :json, access_token: access_token.token, id: question.id, answer: { body: answer.body } }}.to change(Answer, :count).by(1)
+    def do_request(options = {})
+      post '/api/v1/answers', params: { format: :json }.merge(options)
     end
   end
 end
