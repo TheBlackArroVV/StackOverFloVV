@@ -1,0 +1,6 @@
+Daily#digest
+
+Hi, here your digest
+<% @questions.each do |question| %>
+  <%= link_to question.title.truncate(10), question_url(question) %>
+<% end %>
