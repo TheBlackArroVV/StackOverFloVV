@@ -1,8 +1,8 @@
 class QuestionsMailer < ApplicationMailer
-  def new_answer(question)
+  def new_answer(question, user)
     @answer = question.answers.last
 
-    mail(to: question.user.email, subject: 'New Answer')
+    mail(to: user.email, subject: 'New Answer')
   end
 
   def subscribed_question(question, user)

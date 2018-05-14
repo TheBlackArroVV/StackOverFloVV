@@ -14,10 +14,9 @@ Rails.application.routes.draw do
 
   resources :attachments, shallow: true
 
+  resources :user_mails, shallow: true
+
   resources :questions, concerns: :votable do
-    member do
-      post :subscribe_to_question
-    end
     resources :answers, concerns: :votable, shallow: true do
       member do
         post :choose_best

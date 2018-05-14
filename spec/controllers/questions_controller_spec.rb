@@ -10,18 +10,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     let(:answer) { create :answer, user: @user, question: question }
 
-    describe 'POST #subscribe_to question' do
-      before { post :subscribe_to_question, params: { id: question } }
-
-      it 'should assign question' do
-        expect(assigns(:question)).to eq(question)
-      end
-
-      it 'should change UserMail count' do
-        expect { post :subscribe_to_question, params: { id: question } }.to change(UserMail, :count).by(1)
-      end
-    end
-
     describe 'GET #index' do
       let(:questions) { create_list(:question, 2) }
 
@@ -48,6 +36,18 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'should create a new answer' do
         expect { FactoryBot.create(:answer) }.to change(Answer, :count).by(1)
+      end
+
+      context 'subscribed check' do
+        it 'should return false' do
+          expect(assigns(:subscribed)).to eq nil
+        end
+
+        it 'should return true' do
+          UserMail.create(user: @user, question: question)
+          get :show, params: { id: question }
+          expect(assigns(:subscribed)).to eq true
+        end
       end
     end
 
@@ -123,6 +123,7 @@ RSpec.describe QuestionsController, type: :controller do
         question
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       end
+
       it 'should redirect to questions' do
         delete :destroy, params: { id: question }
         expect(response).to redirect_to questions_path

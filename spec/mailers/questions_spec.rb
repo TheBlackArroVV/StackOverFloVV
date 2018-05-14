@@ -6,7 +6,7 @@ RSpec.describe QuestionsMailer, type: :mailer do
     let(:new_user) { create :user }
     let!(:question) { create :question, user: user }
     let!(:answer) { create :answer, question: question, user: new_user }
-    let!(:mail) { QuestionsMailer.new_answer(question) }
+    let!(:mail) { QuestionsMailer.new_answer(question, user) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("New Answer")

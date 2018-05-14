@@ -15,6 +15,6 @@ class Question < ApplicationRecord
   after_update :subscribed_notification
 
   def subscribed_notification
-    SubscribedQuestionJob.perform_now(self)
+    SubscribedQuestionJob.perform_later(self)
   end
 end
