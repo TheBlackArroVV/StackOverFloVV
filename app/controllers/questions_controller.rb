@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, only: %i[new update create destroy]
-  before_action :set_question, only: %i[show update destroy]
+  before_action :set_question, only: %i[show update destroy subscribe_to_question]
 
   after_action :publish_question, only: [:create]
 
@@ -43,6 +43,12 @@ class QuestionsController < ApplicationController
 
   def update
     @question.update(question_params)
+  end
+
+  def subscribe_to_question
+    @user_mail = @question.user_mails.new
+    @user_mail.user = current_user
+    @user_mail.save
   end
 
   private

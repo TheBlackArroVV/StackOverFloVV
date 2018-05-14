@@ -4,4 +4,10 @@ class QuestionsMailer < ApplicationMailer
 
     mail(to: question.user.email, subject: 'New Answer')
   end
+
+  def subscribed_question(question, user)
+    @question = question
+
+    mail(to: user.email, subject: 'Subscribed Question')
+  end
 end

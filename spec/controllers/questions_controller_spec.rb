@@ -10,6 +10,18 @@ RSpec.describe QuestionsController, type: :controller do
 
     let(:answer) { create :answer, user: @user, question: question }
 
+    describe 'POST #subscribe_to question' do
+      before { post :subscribe_to_question, params: { id: question } }
+
+      it 'should assign question' do
+        expect(assigns(:question)).to eq(question)
+      end
+
+      it 'should change UserMail count' do
+        expect { post :subscribe_to_question, params: { id: question } }.to change(UserMail, :count).by(1)
+      end
+    end
+
     describe 'GET #index' do
       let(:questions) { create_list(:question, 2) }
 
