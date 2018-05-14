@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   use_doorkeeper
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations' }
   root to: 'questions#index'
 
   concern :votable do

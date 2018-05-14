@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
   it { should have_many :votes }
   it { should have_many :authorizations }
 
+  it { should validate_presence_of :nickname }
 
   describe '.find_for_oauth' do
     let!(:user) { create :user }
