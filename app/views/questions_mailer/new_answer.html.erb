@@ -1,0 +1,7 @@
+<h1>Questions#new_answer</h1>
+
+<p>
+  Hi, here new answer for your question
+  <br/>
+  <%= link_to @answer.body.truncate(10), question_url(@answer.question_id) %>
+</p>

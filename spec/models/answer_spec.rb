@@ -11,4 +11,16 @@ RSpec.describe Answer, type: :model do
   it { should belong_to :question }
 
   it { should accept_nested_attributes_for :attachments }
+
+
+  describe 'notice' do
+    let(:user) { create :user }
+    let(:new_user) { create :user }
+    let!(:question) { create :question, user: user }
+
+    it 'should deliver message about new answer' do
+      expect(NewAnswerJob).to receive(:perform_later).with(question)
+      create :answer, question: question, user: new_user
+    end
+  end
 end
