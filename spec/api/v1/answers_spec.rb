@@ -44,7 +44,7 @@ describe 'Answer API' do
       let!(:comment) { create(:comment, commentable: answer, user: user) }
       let!(:attachment) { create(:attachment, attachable: answer) }
 
-      before { get '/api/v1/answers', params: { format: :json, access_token: access_token.token, id: answer.id } }
+      before { get '/api/v1/answers', params: { format: :json, access_token: access_token.token, id: answer.question_id } }
 
       it 'returns 200' do
         expect(response).to be_successful

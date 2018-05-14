@@ -71,20 +71,6 @@ feature 'vote for answer' do
     end
   end
 
-  scenario 'user try to delete her vote and vote against again', js: true do
-    user_authentication(new_user)
-    visit question_path(question)
-    within '.answers' do
-      click_on 'Vote for answer'
-      click_on 'Delete my vote'
-      click_on 'Vote against answer'
-    end
-
-    within '.answer_votes_1' do
-      expect(page).to have_content '-1'
-    end
-  end
-
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
@@ -110,6 +96,7 @@ feature 'vote for answer' do
 
 
     within '.answer_votes_1' do
+      save_and_open_page
       expect(page).to have_content '-1'
     end
   end
