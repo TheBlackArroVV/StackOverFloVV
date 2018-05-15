@@ -36,4 +36,7 @@ Rails.application.routes.draw do
       resources :answers
     end
   end
+
+  get '/search', to: 'search#index', format: :json
+  post '/search', to: 'search#index', format: :json
 end

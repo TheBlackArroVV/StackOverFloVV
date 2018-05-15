@@ -1,0 +1,39 @@
+%h1 Search
+
+= form_tag method: :post, remote: true do
+  = select_tag :search_type, options_for_select([['Question', 'Question'], ['Answer', 'Answer'], ['Comment', 'Comment'], ['User', 'User'], ['All', 'ThinkingSphinx']])
+  = label :body, 'Enter what to find'
+  %br/
+  = text_field :body, 'body'
+  %br/
+  = submit_tag 'Find', class: 'find_button'
+
+- if @result
+  - if @result[Question]
+    %div.questions
+      %h2 Questions
+      - @result[Question].each do |result|
+        = link_to result.title, result
+        %br/
+
+  - if @result[Answer]
+    %div.answers
+      %h2 Answers
+      - @result[Answer].each do |result|
+        = link_to result.body, question_path(result.question_id)
+        %br/
+
+  - if @result[Comment]
+    %div.comments
+      %h2 Comments
+      - @result[Comment].each do |result|
+        = link_to result.body, question_path(result.question_id)
+        %br/
+
+  - if @result[User]
+    %div.users
+      %h2 Users
+      - @result[User].each do |result|
+        = result.nickname
+- else
+  Nothing
