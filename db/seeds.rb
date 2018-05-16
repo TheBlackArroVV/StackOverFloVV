@@ -17,7 +17,10 @@ def body
 end
 
 def user
-  User.create(email: email, password: password)
+  user = User.new(email: email, password: password, nickname: title)
+  user.skip_confirmation!
+  user.save!
+  user
 end
 
 def question

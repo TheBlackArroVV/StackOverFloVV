@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'acceptance_helper'
 
 feature 'Add files to answers' do
@@ -7,11 +5,12 @@ feature 'Add files to answers' do
   given(:question) { create :question, user: user }
 
   background do
+    user.confirm
     user_authentication(user)
     visit question_path(question)
   end
 
-  scenario 'User adds file to the question', js: true do
+  scenario 'User adds file to the answer', js: true do
     fill_in 'answer_body', with: 'Body'
     click_on 'add file'
     attach_file 'File', "#{Rails.root}/spec/files/test_file1.txt"

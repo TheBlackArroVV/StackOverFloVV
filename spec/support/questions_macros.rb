@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module QuestionMacros
   def create_question
     visit new_question_path

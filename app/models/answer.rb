@@ -1,8 +1,13 @@
 class Answer < ApplicationRecord
+  include Votable
+  include Commentable
+
   has_many :attachments, as: :attachable
 
   belongs_to :question
   belongs_to :user
+
+  after_create :send_notice
 
   accepts_nested_attributes_for :attachments
 
@@ -19,5 +24,11 @@ class Answer < ApplicationRecord
     self.best_answer = true
     save
     question.answers
+  end
+
+  private
+
+  def send_notice
+    NewAnswerJob.perform_later(question)
   end
 end

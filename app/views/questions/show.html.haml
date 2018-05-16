@@ -4,12 +4,31 @@
 
   %div.question_data
     = render @question
+  %div.question_errors
+  %div.votes
+    = @question.sum_of_votes
+
   %div.question_links
-    - if @question.user == current_user
+    - if @subscribed
+      = link_to 'unsubscribe this question', user_mail_path(id: @question), method: :delete
+    - else
+      = link_to 'subscribe to this question', user_mails_path(id: @question), method: :post
+    - if can? :update, @question
       = link_to 'Edit question', '', class: 'edit_question_link'
+    - if can? :destroy, @question
       = link_to 'Delete question', question_path, method: :delete, remote: true
+    - if can? :like, @question
+      = link_to 'Vote for question', like_question_path(@question), method: :post, remote: true, class: 'vote_for_question'
+    - if can? :dislike, @question
+      = link_to 'Vote against question', dislike_question_path(@question), method: :post, remote: true, class: 'vote_against_question'
+    - if can? :unvote, @question
+      = link_to 'Delete my vote', unvote_question_path(@question), method: :delete, remote: true, class: 'unvote'
+
 
 %br
+
+%div.question_comments
+  = render @question.comments
 
 = render 'answers/form', answer: @answer
 

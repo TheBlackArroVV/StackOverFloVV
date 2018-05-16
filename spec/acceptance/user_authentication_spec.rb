@@ -1,9 +1,11 @@
-# frozen_string_literal: true
-
 require 'acceptance/acceptance_helper'
 
 feature 'User and authentication' do
-  given(:user) { create :user }
+  given!(:user) { create :user }
+
+  before do
+    user.confirm
+  end
 
   scenario 'registred user try to login' do
     user_authentication(user)
@@ -34,11 +36,22 @@ feature 'User and authentication' do
     visit new_user_registration_path
 
     fill_in :user_email, with: 'new_email@email.com'
+    fill_in :user_nickname, with: 'new_user'
     fill_in :user_password, with: user.password
     fill_in :user_password_confirmation, with: user.password
 
-    click_on 'Sign up'
+    within 'form#new_user' do
+      click_on 'Sign up'
+    end
 
-    expect(page).to have_content 'Welcome! You have signed up successfully'
+    User.last.confirm
+
+    visit new_user_session_path
+
+    fill_in :user_email, with: 'new_email@email.com'
+    fill_in :user_password, with: user.password
+    click_on 'Log in'
+
+    expect(page).to have_content 'Signed in successfully'
   end
 end
