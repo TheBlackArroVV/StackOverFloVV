@@ -15,20 +15,19 @@ RSpec.describe SearchController, type: :controller do
     let(:answer) { create :answer, user: @user, question: question }
     let(:comment) { create :comment, user: @user, commentable_type: 'Question', commentable_id: question.id }
 
-    before { post :index, params: { search_type: "Question", body: { body: "MyString" } } }
+    before do
+      ThinkingSphinx::Test.index
+      ThinkingSphinx::Test.start
+
+      post :index, params: { search_type: "Question", body: { body: "MyString" } }
+    end
 
     it 'should render index' do
       expect(response).to render_template :index
     end
 
-    it 'should return question' do
-      allow(Question).to receive(:search).with("MyString")
-      post :index, params: { search_type: "Question", body: { body: "MyString" } }
-      # post :index, params: { search_type: 'Question', body: { body: 'MyString' } }
-      # pp question
-      # pp Question.all
-      # a = assigns(:result)
-      # expect(assigns(:result)).to eq(question)
+    it 'should return question', sphinx: true do
+      expect(assigns(:result)[Question].first).to eq(question)
     end
   end
 end

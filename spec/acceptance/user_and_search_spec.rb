@@ -6,6 +6,11 @@ feature 'search' do
   given!(:answer) { create :answer, body: 'test', user: user, question: question }
   given!(:comment) { create :comment, body: 'test', user: user, commentable: question }
 
+  before do
+    ThinkingSphinx::Test.index
+    ThinkingSphinx::Test.start
+  end
+
   scenario 'search user', sphinx: true do
     visit search_path
 
