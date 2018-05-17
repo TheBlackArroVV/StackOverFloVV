@@ -34,4 +34,3 @@
 /public/uploads
 /config/*.sphinx.conf
 /db/sphinx
-/config/master.key
