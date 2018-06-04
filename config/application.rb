@@ -41,7 +41,7 @@ module Stackoverflow
     Dotenv.overload *Dir.glob(Rails.root.join("config/**/*.env.#{Rails.env}"), File::FNM_DOTMATCH)
 
     config.after_initialize do
-      Rails.application.credentials = RailsEnv.new
+      Rails.application.credentials.env = RailsEnv.new
     end
   end
 end

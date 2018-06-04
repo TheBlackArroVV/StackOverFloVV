@@ -8,7 +8,7 @@ class RailsEnv
 
   def load_environment_variables
     return unless File.exist?(file_name)
-    YAML.safe_load(File.open(file_name)).each do |key, value|
+    HashWithIndifferentAccess.safe_load(YAML.safe_load(File.open(file_name))).each do |key, value|
       self.class.send :define_method, key.downcase do
         value
       end
@@ -22,6 +22,6 @@ class RailsEnv
   end
 
   def file_name
-    Rails.join(Rails.root, 'config', "#{Rails.env}.yml")
+    File.join(Rails.root, 'config', "#{Rails.env}.yml")
   end
 end
