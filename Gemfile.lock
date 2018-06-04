@@ -302,6 +302,8 @@ GEM
     rspec-support (3.7.1)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
+    rvm-capistrano (1.5.0)
+      capistrano (>= 2.15.4)
     sass (3.5.6)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -422,6 +424,7 @@ DEPENDENCIES
   rails-controller-testing
   responders
   rspec-rails
+  rvm-capistrano
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers
@@ -438,7 +441,7 @@ DEPENDENCIES
   whenever
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.5.0p0
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

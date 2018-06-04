@@ -6,6 +6,8 @@ set :repo_url, "git@github.com:TheBlackArroVV/StackOverFloVV.git"
 set :deploy_to, '/var/www/my-app-name'
 set :use_sudo, true
 
+# set :ruby_version, '/home/web/.rvm/rubies/ruby-2.5.1/bin/ruby/'
+
 # Default branch is :master
 ask :deploy, `git rev-parse --abbrev-ref HEAD`.chomp
 
