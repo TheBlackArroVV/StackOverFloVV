@@ -2,6 +2,8 @@ require_relative 'boot'
 
 require 'rails/all'
 
+require_relative 'rails_env'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -37,5 +39,9 @@ module Stackoverflow
 
     # Override any existing variables if an environment-specific file exists
     Dotenv.overload *Dir.glob(Rails.root.join("config/**/*.env.#{Rails.env}"), File::FNM_DOTMATCH)
+
+    config.after_initialize do
+      Rails.application.credentials = RailsEnv.new
+    end
   end
 end
