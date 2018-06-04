@@ -23,6 +23,8 @@ role :db,  %w{web@178.62.112.213}
 
 set :rails_env, :production
 
+# server '18.130.119.58', user: 'ubuntu', roles: %w{web app db}, primary: true
+# set :ssh_options, { forward_agent: true }
 server '178.62.112.213', user: 'web', roles: ["web", "app", "db"], primary: true
 
 # Configuration

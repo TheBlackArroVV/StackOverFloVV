@@ -3,6 +3,8 @@ lock "~> 3.10.2"
 
 set :application, "StackOverFlow"
 set :repo_url, "git@github.com:TheBlackArroVV/StackOverFloVV.git"
+set :deploy_to, '/var/www/my-app-name'
+set :use_sudo, true
 
 # Default branch is :master
 ask :deploy, `git rev-parse --abbrev-ref HEAD`.chomp
