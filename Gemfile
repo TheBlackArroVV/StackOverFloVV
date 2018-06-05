@@ -79,8 +79,8 @@ gem 'pg'
 gem 'mysql2'
 gem 'thinking-sphinx'
 
-# gem 'dotenv'
-# gem 'dotenv-rails'
+gem 'dotenv'
+gem 'dotenv-rails'
 gem 'therubyracer'
 
 gem 'rvm-capistrano'
