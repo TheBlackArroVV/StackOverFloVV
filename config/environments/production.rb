@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -95,5 +93,4 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.require_master_key = true
-  config.config.read_encrypted_secrets = true
 end
