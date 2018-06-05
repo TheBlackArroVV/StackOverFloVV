@@ -40,8 +40,8 @@ module Stackoverflow
     # Override any existing variables if an environment-specific file exists
     Dotenv.overload *Dir.glob(Rails.root.join("config/**/*.env.#{Rails.env}"), File::FNM_DOTMATCH)
 
-    config.after_initialize do
-      Rails.application.credentials.env = RailsEnv.new
-    end
+    # config.after_initialize do
+    #   Rails.application.credentials.env = RailsEnv.new
+    # end
   end
 end

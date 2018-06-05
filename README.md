@@ -92,4 +92,4 @@ sudo apt-get install
 
 // mailer<br/>
 sudo apt-get install exim4-daemon-light mailutils<br/>
-sudo dpkg-reconfigure exim4-config 
+sudo dpkg-reconfigure exim4-config 0
