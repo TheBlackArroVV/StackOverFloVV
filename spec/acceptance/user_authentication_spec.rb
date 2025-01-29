@@ -36,14 +36,18 @@ feature 'User and authentication' do
     visit new_user_registration_path
 
     fill_in :user_email, with: 'new_email@email.com'
+    fill_in :user_nickname, with: 'new_user'
     fill_in :user_password, with: user.password
     fill_in :user_password_confirmation, with: user.password
 
     within 'form#new_user' do
       click_on 'Sign up'
     end
+
     User.last.confirm
-    click_on 'log in'
+
+    visit new_user_session_path
+
     fill_in :user_email, with: 'new_email@email.com'
     fill_in :user_password, with: user.password
     click_on 'Log in'

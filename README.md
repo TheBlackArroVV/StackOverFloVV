@@ -11,5 +11,8 @@ You can also use seeds for creating fake information with Faker
 * How to run the test suite
 Just type "rspec" in folder with project
 
+* How to index search
+rake ts:index
+
 * Deployment instructions
 Not yet ready

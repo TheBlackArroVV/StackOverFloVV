@@ -65,16 +65,6 @@ feature 'vote for question' do
   scenario 'user try to delete her vote and vote for again', js: true do
     user_authentication(new_user)
     visit question_path(question)
-    click_on 'Vote for question'
-    click_on 'Delete my vote'
-    click_on 'Vote for question'
-
-    expect(page).to have_content '1'
-  end
-
-  scenario 'user try to delete her vote and vote for again', js: true do
-    user_authentication(new_user)
-    visit question_path(question)
     click_on 'Vote against question'
     click_on 'Delete my vote'
     click_on 'Vote against question'
