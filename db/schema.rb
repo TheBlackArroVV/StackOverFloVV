@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_10_200155) do
+ActiveRecord::Schema.define(version: 2018_05_14_093507) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
     t.text "body"
@@ -33,7 +36,7 @@ ActiveRecord::Schema.define(version: 2018_05_10_200155) do
   end
 
   create_table "authorizations", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "provider"
     t.string "uid"
     t.datetime "created_at", null: false
@@ -55,7 +58,7 @@ ActiveRecord::Schema.define(version: 2018_05_10_200155) do
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer "resource_owner_id", null: false
-    t.integer "application_id", null: false
+    t.bigint "application_id", null: false
     t.string "token", null: false
     t.integer "expires_in", null: false
     t.text "redirect_uri", null: false
@@ -68,7 +71,7 @@ ActiveRecord::Schema.define(version: 2018_05_10_200155) do
 
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer "resource_owner_id"
-    t.integer "application_id"
+    t.bigint "application_id"
     t.string "token", null: false
     t.string "refresh_token"
     t.integer "expires_in"
@@ -100,6 +103,14 @@ ActiveRecord::Schema.define(version: 2018_05_10_200155) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "user_mails", force: :cascade do |t|
+    t.integer "question_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id", "user_id"], name: "index_user_mails_on_question_id_and_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -136,4 +147,7 @@ ActiveRecord::Schema.define(version: 2018_05_10_200155) do
     t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type"
   end
 
+  add_foreign_key "authorizations", "users"
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
 end

@@ -9,6 +9,10 @@
     = @question.sum_of_votes
 
   %div.question_links
+    - if @subscribed
+      = link_to 'unsubscribe this question', user_mail_path(id: @question), method: :delete
+    - else
+      = link_to 'subscribe to this question', user_mails_path(id: @question), method: :post
     - if can? :update, @question
       = link_to 'Edit question', '', class: 'edit_question_link'
     - if can? :destroy, @question

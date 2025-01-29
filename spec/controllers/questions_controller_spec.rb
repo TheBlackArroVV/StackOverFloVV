@@ -5,6 +5,7 @@ RSpec.describe QuestionsController, type: :controller do
     login_user
     let!(:question) { create :question, user: @user }
     let!(:vote) { create :vote, user: @user, votable: question }
+    let!(:votable_id) { question.id }
     let!(:unvotable_id) { question.id }
     it_behaves_like 'voted'
 
@@ -36,6 +37,18 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'should create a new answer' do
         expect { FactoryBot.create(:answer) }.to change(Answer, :count).by(1)
+      end
+
+      context 'subscribed check' do
+        it 'should return false' do
+          expect(assigns(:subscribed)).to eq nil
+        end
+
+        it 'should return true' do
+          UserMail.create(user: @user, question: question)
+          get :show, params: { id: question }
+          expect(assigns(:subscribed)).to eq true
+        end
       end
     end
 
@@ -111,6 +124,7 @@ RSpec.describe QuestionsController, type: :controller do
         question
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       end
+
       it 'should redirect to questions' do
         delete :destroy, params: { id: question }
         expect(response).to redirect_to questions_path

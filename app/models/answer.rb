@@ -7,6 +7,8 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
 
+  after_create :send_notice
+
   accepts_nested_attributes_for :attachments
 
   validates :body, presence: true
@@ -22,5 +24,11 @@ class Answer < ApplicationRecord
     self.best_answer = true
     save
     question.answers
+  end
+
+  private
+
+  def send_notice
+    NewAnswerJob.perform_later(question)
   end
 end

@@ -10,6 +10,7 @@ class Ability
       can :create, Comment
       can [:like, :dislike, :unvote], [Question, Answer]
       cannot [:like, :dislike, :unvote], [Question, Answer], user: user
+      can :manage, UserMail
     end
     can :read, :all
   end

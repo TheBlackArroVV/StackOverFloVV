@@ -21,6 +21,7 @@ RSpec.describe Ability, type: :model do
     let(:comment) { create :comment, user: user, commentable: question }
     let(:other_comment) { create :comment, user: other_user, commentable: question }
     let(:attachment) { create :attachment, attachable: question }
+    let(:user_mail) { create :user_mail, user: user, question: question }
 
     it { should be_able_to :manage, Attachment }
 
@@ -58,5 +59,8 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :like, question, user: user }
     it { should_not be_able_to :dislike, question, user: user }
     it { should_not be_able_to :unvote, question, user: user }
+
+    it { should be_able_to :subscribe_to_question, user_mail }
+    it { should be_able_to :unsubscribe_from_question, user_mail }
   end
 end

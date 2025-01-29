@@ -8,6 +8,7 @@ RSpec.describe AnswersController, type: :controller do
     let(:new_answer) { create :answer, user: @user, question: question }
     let(:best_answer) { create :answer, user: @user, question: question }
     let!(:vote) { create :vote, user: @user, votable: answer }
+    let!(:votable_id) { answer.id }
     let!(:unvotable_id) { answer.id }
     it_behaves_like 'voted'
 

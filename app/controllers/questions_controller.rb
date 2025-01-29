@@ -2,9 +2,9 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, only: %i[new update create destroy]
-  before_action :set_question, only: %i[show update destroy]
+  before_action :set_question, only: %i[show update destroy subscribe_to_question unsubscribe_from_question]
 
-  after_action :publish_question, only: [:create]
+  after_action :publish_question, only: :create
 
   authorize_resource
 
@@ -21,6 +21,9 @@ class QuestionsController < ApplicationController
     @question.user = current_user
     if @question.save
       flash[:notice] = 'Your question create'
+      @user_mail = @question.user_mails.new
+      @user_mail.user = current_user
+      @user_mail.save
       redirect_to @question
     else
       render :new
@@ -28,6 +31,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @subscribed = true if UserMail.find_by(user: current_user, question: @question)
     @answer = @question.answers.build
     @answers = @question.answers
     gon.question_id = @question.id

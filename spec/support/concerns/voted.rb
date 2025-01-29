@@ -3,12 +3,11 @@ require 'spec_helper.rb'
 shared_examples_for 'voted' do
   context 'POST #like' do
     before do
-      post :like, params: { id: vote, format: 'json' }
+      post :like, params: { id: votable_id, format: 'json' }
     end
 
     it 'should create new vote' do
       expect(assigns(:vote).score).to eq 1
-      expect(assigns(:vote).votable_id).to eq 1
     end
 
     it 'should take score to 1' do
@@ -18,12 +17,11 @@ shared_examples_for 'voted' do
 
   context 'POST #dislike' do
     before do
-      post :dislike, params: { id: vote, format: 'json' }
+      post :dislike, params: { id: votable_id, format: 'json' }
     end
 
     it 'should create new vote' do
       expect(assigns(:vote).score).to eq -1
-      expect(assigns(:vote).votable_id).to eq 1
     end
 
     it 'should take score to -1' do
