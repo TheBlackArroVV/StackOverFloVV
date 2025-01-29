@@ -1,7 +1,7 @@
 require 'acceptance/acceptance_helper'
 
 feature 'User and authentication' do
-  given(:user) { create :user }
+  given!(:user) { create :user }
 
   scenario 'registred user try to login' do
     user_authentication(user)

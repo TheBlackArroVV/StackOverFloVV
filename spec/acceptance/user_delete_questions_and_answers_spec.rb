@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'acceptance/acceptance_helper'
 
 feature 'User delete questions and answers' do
@@ -12,7 +10,7 @@ feature 'User delete questions and answers' do
     create_question
     click_on 'Delete question'
 
-    expect(page).to have_content 'Your question was deleted'
+    expect(page).to have_content 'Question was successfully destroyed'
   end
 
   scenario 'User try to delete her answer', js: true do
