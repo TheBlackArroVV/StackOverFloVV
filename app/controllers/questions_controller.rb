@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   def index
     @questions = Question.all
   end
@@ -36,6 +38,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     respond_with(@question.destroy)
+
   end
 
   def update
