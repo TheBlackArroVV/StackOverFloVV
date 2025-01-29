@@ -5,12 +5,17 @@ class AnswersController < ApplicationController
   before_action :set_question, only: :create
   before_action :set_answer, only: %i[destroy update choose_best]
 
+  after_action :publish_answer, only: [:create]
+
   def create
     @answer = @question.answers.new(answer_params)
     flash[:notice] = 'You need to sign in or sign up before continuing.' unless current_user
     @answer.user = current_user
     @answer.save
-    @answer.attachments.build
+    if params[:answer]
+      @answer.attachments.build if params[:answer][:attachments_attributes]
+    end
+    gon.question_id = @answer.question.id
   end
 
   def update
@@ -37,6 +42,12 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+    pp @answer
+    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer.as_json.merge({sum: @answer.sum_of_votes})
   end
 
   def set_question

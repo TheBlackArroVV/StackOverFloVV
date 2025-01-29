@@ -9,7 +9,7 @@ feature 'vote for answer' do
   scenario 'all users can see number of votes for answer', js: true do
     visit question_path(question)
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to have_content '0'
     end
   end
@@ -25,7 +25,7 @@ feature 'vote for answer' do
     visit question_path(question)
     click_on 'Vote for answer'
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to have_content '1'
     end
   end
@@ -34,7 +34,7 @@ feature 'vote for answer' do
     user_authentication(user)
     visit question_path(question)
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to_not have_content 'Vote for answer'
       expect(page).to have_content '0'
     end
@@ -51,7 +51,7 @@ feature 'vote for answer' do
     visit question_path(question)
     click_on 'Vote against answer'
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to have_content '-1'
     end
   end
@@ -60,7 +60,7 @@ feature 'vote for answer' do
     user_authentication(user)
     visit question_path(question)
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to_not have_content 'Vote against answer'
       expect(page).to have_content '0'
     end
@@ -75,7 +75,7 @@ feature 'vote for answer' do
       click_on 'Vote against answer'
     end
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to have_content '-1'
     end
   end
@@ -89,7 +89,7 @@ feature 'vote for answer' do
       click_on 'Vote for answer'
     end
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to have_content '1'
     end
   end
@@ -104,7 +104,7 @@ feature 'vote for answer' do
     end
 
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to have_content '-1'
     end
   end
@@ -118,7 +118,7 @@ feature 'vote for answer' do
       click_on 'Vote for answer'
     end
 
-    within '.answer_votes' do
+    within '.answer_votes_1' do
       expect(page).to have_content '1'
     end
   end

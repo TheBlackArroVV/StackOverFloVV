@@ -7,6 +7,7 @@
   %div.question_errors
   %div.votes
     = @question.sum_of_votes
+
   %div.question_links
     - if user_signed_in?
       - if @question.user == current_user
@@ -19,6 +20,9 @@
 
 
 %br
+
+%div.question_comments
+  = render @question.comments
 
 = render 'answers/form', answer: @answer
 
