@@ -6,6 +6,11 @@ feature 'vote for answer' do
   given(:question) { create :question, user: user }
   given!(:answer) { create :answer, user: user, question: question }
 
+  before do
+    user.confirm
+    new_user.confirm
+  end
+
   scenario 'all users can see number of votes for answer', js: true do
     visit question_path(question)
 

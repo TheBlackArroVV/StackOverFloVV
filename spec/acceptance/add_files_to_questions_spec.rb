@@ -6,6 +6,7 @@ feature 'Add Files to questions' do
   given(:user) { create :user }
 
   background do
+    user.confirm
     user_authentication(user)
     visit new_question_path
   end

@@ -9,6 +9,11 @@ feature 'user and comments' do
   given!(:comment) { create :comment, user: user, commentable_id: question.id, commentable_type: 'Question' }
   given!(:answer_comment) { create :comment, user: user, commentable_id: answer.id, commentable_type: 'Answer' }
 
+  before do
+    user.confirm
+    new_user.confirm
+  end
+
   fcontext 'action cable tests' do
     scenario 'multiply sessions for comment question', js: true do
       Capybara.using_session('user') do

@@ -3,6 +3,10 @@ require 'acceptance/acceptance_helper'
 feature 'User and authentication' do
   given!(:user) { create :user }
 
+  before do
+    user.confirm
+  end
+
   scenario 'registred user try to login' do
     user_authentication(user)
 
@@ -38,7 +42,12 @@ feature 'User and authentication' do
     within 'form#new_user' do
       click_on 'Sign up'
     end
+    User.last.confirm
+    click_on 'log in'
+    fill_in :user_email, with: 'new_email@email.com'
+    fill_in :user_password, with: user.password
+    click_on 'Log in'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully'
+    expect(page).to have_content 'Signed in successfully'
   end
 end

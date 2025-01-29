@@ -5,6 +5,10 @@ feature 'User and questions' do
   given(:question) { create :question }
   given!(:answer) { create :answer, question: question }
 
+  before do
+    user.confirm
+  end
+
   describe 'loged user try to create question' do
     scenario 'user create a question' do
       user_authentication(user)
