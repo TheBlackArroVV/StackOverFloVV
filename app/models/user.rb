@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :answers
   has_many :votes
 
+
+
   def self.find_for_oauth(oauth)
     authorization = Authorization.find_by(provider: oauth[:provider], uid: oauth[:uid].to_s)
     return authorization.user if authorization
@@ -23,5 +25,9 @@ class User < ApplicationRecord
       user.authorizations.create(provider: oauth[:provider], uid: oauth[:uid].to_s)
       user
     end
+  end
+
+  def self.other_users(id)
+    User.where.not(id: id)
   end
 end

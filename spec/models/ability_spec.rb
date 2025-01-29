@@ -58,6 +58,5 @@ RSpec.describe Ability, type: :model do
     it { should_not be_able_to :like, question, user: user }
     it { should_not be_able_to :dislike, question, user: user }
     it { should_not be_able_to :unvote, question, user: user }
-
   end
 end

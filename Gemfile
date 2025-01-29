@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -70,6 +68,9 @@ gem 'omniauth-twitter'
 # authorization
 gem 'cancancan'
 
+# REST API
+gem 'doorkeeper', '4.2.6'
+
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -103,6 +104,7 @@ group :test do
   # macros for rspec
   gem 'launchy'
   gem 'shoulda-matchers'
+  gem 'json_spec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
