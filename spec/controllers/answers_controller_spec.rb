@@ -1,8 +1,8 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  it_behaves_like 'voted'
+
   describe 'POST #choose_best' do
     login_user
     let(:question) { create :question, user: @user }
@@ -82,6 +82,18 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         expect(answer.body).to eq 'MyAnswer'
       end
+    end
+  end
+
+  context 'DELETE #unvote' do
+    login_user
+    let(:new_user) { create :user }
+    let(:question) { create :question, user: new_user }
+    let(:answer) { create :answer, user: new_user, question: question }
+    let!(:vote) { create :vote, votable: answer, user: @user }
+
+    it 'should delete vote from db' do
+      expect { delete :unvote, params: { id: answer, format: :json } }.to change(Vote, :count).by(-1)
     end
   end
 
